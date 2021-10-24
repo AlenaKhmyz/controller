@@ -1,46 +1,39 @@
-@font-face {
-  font-family: "Malina";
-  src: local("Malina") url("../fonts/Malina.woff") format("woff"),
-}
 
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
 }
 
-.logo {
-  width: 20rem;
-  margin-bottom: 1rem;
-}
 
-.phone, .password {
+
+.phone, .password, .button, .logo {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  width: 30rem;
+  width: 20rem;
   margin-bottom: 10px;
 }
 
-.label-phone, .label-password {
-  width: 20%;
-}
-
 .form-phone, .form-password {
-  width: 90%;
+  width: 100%;
   height: 2.2rem;
   border: 1px solid grey;
   border-radius: 5px;
   padding: 0 5px;
 }
 
+.button {
+  display: flex;
+  justify-content: end;
+}
+
 .form-button {
-  width: 30rem;
+  width: 100%; 
   height: 3rem;
-  font-family: Malina, sans-serif;
+  font: 22px/1 'Malina', sans-serif;
   letter-spacing: -.5px;
   -webkit-font-smoothing: antialiased;
   border: 1px solid rgb(36, 162, 201);
