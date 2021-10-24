@@ -1,23 +1,31 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import './style.css'
+import logo from './logo.png'
 
 function SignInPage() {
 
   return(
     <div className="form">
-      <p className="form-title">Turbo Chef</p>
-      <input
+      <img className="logo" src={ logo} alt="Логотип"/>
+      <div className="phone">
+        <p className="label-phone">Логин</p>
+        <input
         type="text"
-        placeholder="phone"
         className="form-phone"
-      />
-      <input
+        />
+      </div>
+      <div className="password">
+        <p className="label-password">Пароль</p>
+        <input
         type="text"
-        placeholder="password"
         className="form-password"
         type="password"
-      />
-    <button className="form-button">Sign in</button> 
+        />
+      </div>
+    <button className="form-button">Войти</button> 
     </div>
     
   )
 }
+
+export default SignInPage
