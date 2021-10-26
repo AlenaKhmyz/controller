@@ -3,7 +3,7 @@
 <script>
   let password = '';
   let login = '';
-  let src = "./logo.png";
+  let src = "images/logo.png";
   const onSave = () => {
     return console.log(password, login)
   }
