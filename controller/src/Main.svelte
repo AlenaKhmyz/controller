@@ -1,17 +1,77 @@
+<style>
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .main-operation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .time {
+    margin: 0 2rem;
+    font: 42px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: rgba(255, 8, 8, 0.726);
+  }
+
+  .button-control {
+    margin: 0 2rem;
+    height: 2rem;
+    width: 3rem;
+    border: 1px solid;
+    border-color: rgba(255, 8, 8, 0.726);
+    background-color: rgba(255, 8, 8, 0.726);
+  }
+
+  .operation-conveyor, .operation-heat, .operation-blowing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 9rem;
+  }
+
+  .conveyor-unit, .temperature, .blowing-unit {
+    text-align: center;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin: 0.5rem;
+    width: 80%;
+    font: 22px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: red;
+  }
+
+  .conveyor, .heat-symbol, .blowing-symbol {
+    height: 2rem;
+    width: 80%;
+    border: 1px solid;
+    border-color: rgba(255, 8, 8, 0.726);
+    background-color: rgba(255, 8, 8, 0.726);
+  }
+
+</style>
+
 <div class="main">
   <div class="main-operation">
-    <div class="time"></div>
-    <div class="button-control"></div>
+    <div class="time"> 17.24</div>
+    <button class="button-control"></button>
     <div class="operation-conveyor">
-      <p class="conveyor-unit"></p>
+      <p class="conveyor-unit">1347 mPm</p>
       <div class="conveyor"></div>
     </div>
     <div class="operation-heat">
-      <p class="temperature"></p>
+      <p class="temperature"> 120 C</p>
       <div class="heat-symbol"></div>
     </div>
     <div class="operation-blowing">
-      <p class="blowing-unit"></p>
+      <p class="blowing-unit">3400 rPm</p>
       <div class="blowing-symbol"></div>
     </div>
   </div>
