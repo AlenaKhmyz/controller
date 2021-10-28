@@ -1,3 +1,8 @@
+<script>
+
+//import { missing_component } from "svelte/internal";
+
+</script>
 <style>
   .main {
     display: flex;
@@ -12,6 +17,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    margin: 1rem 0;
   }
 
   .time {
@@ -45,7 +51,7 @@
     width: 80%;
     font: 22px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: red;
+    color: rgba(255, 8, 8, 0.726);
   }
 
   .conveyor, .heat-symbol, .blowing-symbol {
@@ -54,6 +60,26 @@
     border: 1px solid;
     border-color: rgba(255, 8, 8, 0.726);
     background-color: rgba(255, 8, 8, 0.726);
+  }
+
+  .current-operation, .operation-mode {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .operation-name, .operation-finish, .operation-next {
+    margin: 1rem 0.5rem;
+    font: 22px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.726);
+  }
+
+  .operation-value,.operation-time, .operation-next-value {
+    margin: 1rem 2rem 1rem 0;
+    font: 22px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: rgba(255, 8, 8, 0.726);
   }
 
 </style>
@@ -76,11 +102,14 @@
     </div>
   </div>
   <div class="current-operation">
-    <p class="operation-name"></p>
-    <p class="operation-time"></p>
+    <p class="operation-name">Current operation mode: </p>
+    <p class="operation-value">IDLE</p>
+    <p class="operation-finish">Finish in</p>
+    <p class="operation-time">120 min</p>
   </div>
   <div class="operation-mode">
-    <p class="operation-next"></p>
+    <p class="operation-next">Next operation mode: </p>
+    <p class="operation-next-value">MODE2</p>
   </div>
   <div class="operation-timetable">
     <table class="timetable">
