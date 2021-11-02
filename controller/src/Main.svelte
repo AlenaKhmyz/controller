@@ -100,29 +100,47 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   .operation-settings {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  .settings-word {
+    margin-top: 1rem;
+    font: 22px/1 sans-serif;
+    font-weight: 900;
+    color: rgb(76, 88, 103);
   }
 
   .operations {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin: 2rem 0 0 4rem;
   }
 
   .indicator {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
   }
 
   .time {
-    font: 72px/1 'Malina', sans-serif;
+    font: 102px/1 'Malina', sans-serif;
     font-weight: 700;
     color: rgba(255, 8, 8, 0.726);
+  }
+
+  .action-operations {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 4rem;
   }
 
   .indicator-control {
@@ -141,15 +159,15 @@
   }
 
   .operation-name {
-    margin: 1rem 0.5rem;
-    font: 22px/1 'Malina', sans-serif;
+    margin: 0.2rem;
+    font: 17px/1 'Malina', sans-serif;
     font-weight: 700;
     color: rgb(76, 88, 103);
   }
 
-  .operation-value, .value {
-    margin: 1rem 2rem 1rem 0;
-    font: 22px/1 'Malina', sans-serif;
+  .operation-value {
+    margin: 0.2rem;
+    font: 19px/1 'Malina', sans-serif;
     font-weight: 700;
     color: rgba(255, 8, 8, 0.726);
   }
@@ -158,7 +176,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     margin: 1rem 0;
   }
 
@@ -170,6 +188,8 @@
   .timetable-operation {
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
+    padding: 0.5rem 0 1rem 1.5rem;
   }
 
   .timetable {
@@ -177,7 +197,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .day {
@@ -192,7 +212,9 @@
   .day-operations {
     display: flex;
     flex-direction: row;
-    margin-left: 20px;
+    flex-wrap: wrap;
+    width: 41rem;
+    margin-left: 10px;
   }
 
   .operation {
@@ -201,23 +223,33 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    height: 2.7rem;
-    width: 180px;
-    padding: 1rem;
+    margin: 0.5rem;
+    padding: 0.7rem;
+    width: 12rem;
     border: 2px solid;
     border-color: rgb(209,209,209);
     background-color: rgb(209, 209, 209);
   }
 
-  .triangle-right {
-    position: relative;
-    margin-right: 20px;
-    width: 0;
-    height: 0;
-    border-top: 21.5px solid transparent;
-    border-left: 25px solid rgb(209, 209, 209);
-    border-bottom: 21.5px solid transparent;
-  } 
+  .action {
+    margin-right: 0.5rem;
+    font: 17px/1 'Malina', sans-serif;
+    font-weight: 500;
+    color: rgb(76, 88, 103);
+  }
+
+  .action-time {
+    font: 17px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: rgba(255, 8, 8, 0.726);
+  }
+
+  .mean {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3.5rem 1rem;
+  }
 
   .symbol {
     height: 2rem;
@@ -225,6 +257,13 @@
     border: 1px solid;
     border-color: rgba(255, 8, 8, 0.726);
     background-color: rgba(255, 8, 8, 0.726);
+  }
+
+  .value {
+    margin: 0.5rem;
+    font: 22px/1 'Malina', sans-serif;
+    font-weight: 700;
+    color: rgba(255, 8, 8, 0.726);
   }
 
 </style>
@@ -265,72 +304,82 @@
             M16,19.002c-1.656,0-3-1.344-3-3c0-1.656,1.344-3,3-3s3,1.344,3,3C19,17.658,17.656,19.002,16,19.002z"/>
         </g>
       </svg>
-      <p class="search-word">Настройки</p>
+      <p class="settings-word">Настройки</p>
     </div>
     <div class="operations">
       <div class="indicator">
         <button class="indicator-control"></button>
         <div class="time"> 17.24</div>
-        
       </div>
-      <div class="operation-mean">
-        <p class="operation-name">Current operation mode: </p>
-        <p class="operation-value">IDLE</p>
-      </div>
-      <div class="operation-mean">
-        <p class="operation-name">Finish in</p>
-        <p class="operation-value">120 min</p>
-      </div>
-      <div class="operation-mean">
-        <p class="operation-name">Next operation mode: </p>
-        <p class="operation-value">MODE2</p>
+      <div class="action-operations">
+        <div class="operation-mean">
+          <p class="operation-name">Current operation mode: </p>
+          <p class="operation-value">IDLE</p>
+        </div>
+        <div class="operation-mean">
+          <p class="operation-name">Finish in</p>
+          <p class="operation-value">120 min</p>
+        </div>
+        <div class="operation-mean">
+          <p class="operation-name">Next operation mode: </p>
+          <p class="operation-value">MODE2</p>
+        </div>
       </div>
     </div> 
   </div>
   <div class="main">
-    <div class="timetablee-operation">
+    <div class="timetable-operation">
       <div class="timetable">
         <div class="days">
           <p class="day">понедельник</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          <div class="operation">
+            <p class="action">IDLE</p>
+            <p class="action-time">17:20</p>
+          </div>
+          
+          <div class="operation">
+            <p class="action">IDLE</p>
+            <p class="action-time">17:20</p>
+          </div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-        </div>
-        <div class="triangle-right"></div>
+          
+        </div>  
       </div>
       <div class="timetable">
         <div class="days">
           <p class="day">вторник</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>
         
       </div>
@@ -338,22 +387,22 @@
         <div class="days">
           <p class="day">среда</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>
         
       </div>
@@ -361,88 +410,88 @@
         <div class="days">
           <p class="day">четверг</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>
       </div>
       <div class="timetable">
         <div class="days">
           <p class="day">пятница</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>  
       </div>
       <div class="timetable">
         <div class="days">
           <p class="day">суббота</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>   
       </div>
       <div class="timetable">
         <div class="days">
           <p class="day">воскресенье</p> 
         </div>
-        <div class=day-operations>
+        <div class="day-operations">
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE1</p>
             <p class="action-time">17:20-20:40</p>
           </div>
-          <div class="triangle-right"></div>
+          
           <div class="operation">
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          <div class="triangle-right"></div>
+          
         </div>    
       </div>
     </div>
