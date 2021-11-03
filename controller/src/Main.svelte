@@ -42,15 +42,15 @@
     width: 80%;
     font: 22px/1 sans-serif;
     font-weight: 700;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(36, 162, 201);
   }
 
   .conveyor, .heat-symbol, .blowing-symbol {
     height: 2rem;
     width: 80%;
     border: 1px solid;
-    border-color: rgba(255, 8, 8, 0.726);
-    background-color: rgba(255, 8, 8, 0.726);
+    border-color: rgb(36, 162, 201);
+    background-color: rgb(36, 162, 201);
   }
 
   .current-operation, .operation-mode {
@@ -64,7 +64,7 @@
     margin: 1rem 0.5rem;
     font: 22px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: rgb(76, 88, 103);
+    color: rgb(103, 140, 151);
   }
 
   .operation-value,.operation-time, .operation-next-value {
@@ -84,7 +84,7 @@
     margin-block-end: 0rem;
     font: 20px/1 'Malina', sans-serif;
     font-weight: 500;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(36, 162, 201);
   }
 
   .operation-settings {
@@ -108,13 +108,17 @@
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
+    padding: 2rem 0.5rem;
+    border: 2px solid;
+    border-color: rgb(209,209,209);
+    border-radius: 1rem;
   }
 
   .settings-word {
     margin-top: 1rem;
     font: 22px/1 sans-serif;
     font-weight: 900;
-    color: rgb(76, 88, 103);
+    color: rgb(103, 140, 151);
   }
 
   .operations {
@@ -133,7 +137,7 @@
   .time {
     font: 102px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(36, 162, 201);
   }
 
   .action-operations {
@@ -148,8 +152,8 @@
     height: 2rem;
     width: 3rem;
     border: 1px solid;
-    border-color: rgba(255, 8, 8, 0.726);
-    background-color: rgba(255, 8, 8, 0.726);
+    border-color: rgb(36, 162, 201);
+    background-color: rgb(36, 162, 201);
   }
 
   .operation-mean {
@@ -160,16 +164,16 @@
 
   .operation-name {
     margin: 0.2rem;
-    font: 17px/1 'Malina', sans-serif;
-    font-weight: 700;
-    color: rgb(76, 88, 103);
+    font: 21px/1 'Malina', sans-serif;
+    font-weight: 500;
+    color: rgb(103, 140, 151);
   }
 
   .operation-value {
     margin: 0.2rem;
-    font: 19px/1 'Malina', sans-serif;
+    font: 21px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(36, 162, 201);
   }
 
   .main {
@@ -177,7 +181,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 1rem 0;
   }
 
   .elements-operations {
@@ -206,7 +209,7 @@
     margin-bottom: 4px;
     font: 22px/1 sans-serif;
     font-weight: 900;
-    color: rgb(76,88,103);
+    color: rgb(103, 140, 151);
   }
   
   .day-operations {
@@ -228,42 +231,41 @@
     width: 12rem;
     border: 2px solid;
     border-color: rgb(209,209,209);
-    background-color: rgb(209, 209, 209);
   }
 
   .action {
     margin-right: 0.5rem;
     font: 17px/1 'Malina', sans-serif;
     font-weight: 500;
-    color: rgb(76, 88, 103);
+    color: rgb(103, 140, 151);
   }
 
   .action-time {
     font: 17px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(116, 217, 248);
   }
 
   .mean {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 3.5rem 1rem;
+    margin: 2.5rem 1rem;
   }
 
   .symbol {
     height: 2rem;
     width: 3rem;
     border: 1px solid;
-    border-color: rgba(255, 8, 8, 0.726);
-    background-color: rgba(255, 8, 8, 0.726);
+    border-color: rgb(36, 162, 201);
+    background-color: rgb(36, 162, 201);
   }
 
   .value {
     margin: 0.5rem;
     font: 22px/1 'Malina', sans-serif;
     font-weight: 700;
-    color: rgba(255, 8, 8, 0.726);
+    color: rgb(36, 162, 201);
   }
 
 </style>
@@ -313,15 +315,15 @@
       </div>
       <div class="action-operations">
         <div class="operation-mean">
-          <p class="operation-name">Current operation mode: </p>
+          <p class="operation-name">Текущий режим работы:</p>
           <p class="operation-value">IDLE</p>
         </div>
         <div class="operation-mean">
-          <p class="operation-name">Finish in</p>
+          <p class="operation-name">Закончится в</p>
           <p class="operation-value">120 min</p>
         </div>
         <div class="operation-mean">
-          <p class="operation-name">Next operation mode: </p>
+          <p class="operation-name">Следующий режим работы: </p>
           <p class="operation-value">MODE2</p>
         </div>
       </div>
