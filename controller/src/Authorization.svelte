@@ -33,6 +33,20 @@
   </div>
 <!-- Блок  настройки Wi-Fi -->
   <div class="settings-wi-fi">
-    
+    <p class="block-paragraphs">Вбырите пункт</p>
+    <div class="paragrapfs">
+      <p class="name-paragrapfs">Независимая точка доступа</p>
+      <p class="name-paragrapfs">Подключиться к существующей сети</p>
+    </div>
+    <div class="ssid">
+      <input class="confirm">
+      <input class="ssid-password">
+    </div>
+    <button class="settings-wi-fi-button"></button>
+  </div>
+<!--Блок настройи контроллера-->
+  <div class="controller">
+    <button class="reset"></button>
+    <button class="restart"></button>
   </div>
 </div>
