@@ -1,5 +1,11 @@
 <script>
   import { missing_component } from "svelte/internal";
+
+  let showDropDown = false;
+
+  const onShowDropDown = () => {
+    setShowDropDown(!showDropDown)
+  }
 </script>
 
 
@@ -9,13 +15,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
   }
 
-  .authorization {
+  .authorization, .settings-wi-fi, .controller {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
   }
 
   .title {
@@ -63,6 +69,34 @@
     color: rgb(103, 140, 151);
   }
 
+  .access-point, .ssid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .confirm {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+  }
+
+  .reset, .restart {
+    width: 70%; 
+    height: 3rem;
+    font: 17px/1 'Malina', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    border: 1px solid rgb(36, 162, 201);
+    border-radius: 5px;
+    background-color: rgb(36, 162, 201);
+    color: rgb(255, 255, 255);
+  }
+
+  .controller {
+    margin-bottom: 30px;
+  }
+
 </style>
 
 
@@ -95,22 +129,28 @@
   <div class="settings-wi-fi">
     <h2 class="title">Настройки wi-fi</h2>
     <div class="access-point">
-      <p class="block-paragraphs">Вбырите пункт:</p>
-      <div class="paragrapfs">
+      <p class="block-paragraphs">Выберите пункт:</p>
+      <input onClick={onShowDropDown}>
+      {showDropDown && <div> {
+         <div class="paragrapfs">
         <p class="name-paragrapfs">Независимая точка доступа</p>
         <p class="name-paragrapfs">Подключиться к существующей сети</p>
       </div>
+      }</div>
+       
+      }
+      
     </div>
     <div class="ssid">
-      <input class="confirm">
-      <input class="ssid-password">
+      <input class="confirm" placeholder="Введите SSID" type="text">
+      <input class="confirm" placeholder="Введите пароль" type="password">
     </div>
     <button class="settings-wi-fi-button">Подтвердить</button>
   </div>
 <!--Блок настройи контроллера-->
   <div class="controller">
     <h2 class="title">Настройки контроллера</h2>
-    <button class="reset"></button>
-    <button class="restart"></button>
+    <button class="reset">Сброс настроек</button>
+    <button class="restart">Рестарт микроконтроллера</button>
   </div>
 </div>
