@@ -1,11 +1,13 @@
 <script>
   import { missing_component } from "svelte/internal";
+  let paragraphs = [
+    {id: 1, text: 'Независимая точка доступа'},
+    {id: 2, text: 'Подключиться к существующей сети'},
+  ];
 
-  let showDropDown = false;
+  let selected;
 
-  const onShowDropDown = () => {
-    setShowDropDown(!showDropDown)
-  }
+  let value = "";
 </script>
 
 
@@ -38,7 +40,7 @@
   input {
     width: 100%;
     height: 2rem;
-    border: 1px solid grey;
+    border: 1px solid rgb(103, 140, 151);
     border-radius: 5px;
     padding: 0 5px;
     font: 15px/1 sans-serif;
@@ -57,13 +59,28 @@
     color: rgb(255, 255, 255);
   }
 
+  .access-point {
+    margin-bottom: 20px;
+  }
+
   .block-paragraphs {
-    font: 20px/1 'Malina', sans-serif;
-    font-weight: 700;
+    margin-right: 7px;
+    font: 19px/1 'Malina', sans-serif;
+    font-weight: 500;
     color: rgb(36, 162, 201);
   }
 
-  .name-paragrapfs {
+  .paragraphs {
+    width: 60.5%;
+    height: 2rem;
+    border: 1px solid rgb(103, 140, 151);
+    border-radius: 5px;
+    padding: 0 5px;
+    font: 15px/1 sans-serif;
+    color: rgb(103, 140, 151);
+  }
+
+  .name-paragraphs {
     padding: 10px;
     font: 15px/1 sans-serif;
     color: rgb(103, 140, 151);
@@ -130,16 +147,13 @@
     <h2 class="title">Настройки wi-fi</h2>
     <div class="access-point">
       <p class="block-paragraphs">Выберите пункт:</p>
-      <input onClick={onShowDropDown}>
-      {showDropDown && <div> {
-         <div class="paragrapfs">
-        <p class="name-paragrapfs">Независимая точка доступа</p>
-        <p class="name-paragrapfs">Подключиться к существующей сети</p>
-      </div>
-      }</div>
-       
-      }
-      
+      <select value={selected} on:change="{() => value = ''}" class="paragraphs">
+        {#each paragraphs as paragraph}
+          <option value={paragraph} class="name-paragraphs">
+            {paragraph.text}
+          </option>
+		    {/each}
+      </select>
     </div>
     <div class="ssid">
       <input class="confirm" placeholder="Введите SSID" type="text">
