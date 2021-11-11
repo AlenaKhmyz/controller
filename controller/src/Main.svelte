@@ -310,7 +310,7 @@
     </div>
     <div class="operations">
       <div class="indicator">
-        <button class="indicator-control"></button>
+        <!-- <button class="indicator-control"></button> -->
         <div class="time"> 17.24</div>
       </div>
       <div class="action-operations">

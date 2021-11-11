@@ -1,6 +1,6 @@
-import Authorization from './Authorization.svelte';
+import Main from './Main.svelte';
 
-const app = new Authorization({
+const app = new Main({
 	target: document.body
 });
 
