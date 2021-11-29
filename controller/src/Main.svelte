@@ -1,6 +1,14 @@
 <script>
+  import {onMount} from 'svelte'
 
-//import { missing_component } from "svelte/internal";
+  let posts = {}
+
+  onMount(async() => {
+  
+    const response = await fetch('http://46.216.20.67:81/give?table')
+    posts = await response.json()
+      console.log(posts)
+  })
 
 </script>
 <style>
