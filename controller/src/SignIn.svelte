@@ -4,8 +4,16 @@
   let password = '';
   let login = '';
   let src = "images/logo.png";
-  const onSave = () => {
-    return console.log(password, login)
+  const submit = async() => {
+    await fetch('http://46.216.20.67:81/auth?login=test&password=test', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'include',
+      body: JSON.stringify({
+        login, password
+      })
+    })
+   console.log(password, login)
   }
 </script>
 
@@ -16,7 +24,7 @@
     type="text"
     class="form-phone"
     placeholder="Логин"
-    value={login} onChange={(event) => {login(event.target.value)}}
+    bind:value={login} onChange={(event) => {login(event.target.value)}}
     />
   </div>
   <div class="password">
@@ -24,11 +32,11 @@
     class="form-password"
     placeholder="Пароль"
     type="password"
-    value={password} onChange={(event) => {password(event.target.value)}}
+    bind:value={password} onChange={(event) => {password(event.target.value)}}
     />
   </div>
   <div class="button">
-    <button class="form-button" onClick={onSave}>Войти</button> 
+    <button class="form-button" type="submit" on:click|preventDefault={submit}>Войти</button> 
   </div>
 </div>
 

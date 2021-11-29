@@ -1,6 +1,6 @@
-import Main from './Main.svelte';
+import SignIn from './SignIn.svelte';
 
-const app = new Main({
+const app = new SignIn({
 	target: document.body
 });
 
