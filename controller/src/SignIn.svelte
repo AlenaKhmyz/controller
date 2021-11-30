@@ -1,17 +1,17 @@
 <!-- 1) подключение шрифтов -->
 
 <script>
-  let password = '';
-  let login = '';
+  let password = 'test';
+  let login = 'test';
   let src = "images/logo.png";
   const submit = async() => {
-    await fetch('http://46.216.20.67:81/auth?login=test&password=test', {
+    await fetch('http://46.216.9.22:81/auth', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      credentials: 'include',
+      //credentials: 'include',
       body: JSON.stringify({
         login, password
-      })
+      }),
     })
    console.log(password, login)
   }
