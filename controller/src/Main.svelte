@@ -5,7 +5,7 @@
 
   onMount(async() => {
   
-    const response = await fetch('http://46.216.20.67:81/give?table')
+    const response = await fetch('http://46.216.9.22:81/give?table')
     posts = await response.json()
       console.log(posts)
   })

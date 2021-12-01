@@ -1,20 +1,25 @@
 <!-- 1) подключение шрифтов -->
 
 <script>
+  	import { push, replace, location } from "svelte-spa-router";
   let password = 'test';
   let login = 'test';
   let src = "images/logo.png";
   const submit = async() => {
-    await fetch('http://46.216.9.22:81/auth', {
+    const response = await fetch('http://46.216.9.22:81/auth', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
       //credentials: 'include',
-      body: JSON.stringify({
-        login, password
-      }),
+      body: new URLSearchParams({
+        login,
+        password
+      })
     })
-   console.log(password, login)
+    const data = await response.json()
+    sessionStorage.setItem("authtoken", data.token)
+     replace("/")
   }
+
 </script>
 
 <div class="form">
