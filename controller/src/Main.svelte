@@ -2,14 +2,42 @@
   import {onMount} from 'svelte'
 
   let posts = {}
+  let weekdays = []
+
 
   onMount(async() => {
   
-    const response = await fetch('http://46.216.9.22:81/give?table')
-    posts = await response.json()
-      console.log(posts)
+    const response = await fetch(`http://46.216.9.22:81/give?table`, {
+      method: 'GET',
+      headers: {'Content-Type': 'text/plain'},
+     
+    })
+      posts = await response.json()
+
+    // weekdays = posts.table.weekday[]
+    console.log(posts.table.weekday.length)
+    for(let i=0; i < posts.table.weekday.length; i++) {
+      console.log(posts.table.weekday[i])
+      if(posts.table.weekday[i] != null){
+        for(let j=0; j < posts.table.weekday[i].length; j++){
+          weekdays[i].push(posts.table.weekday[i][j])
+          console.log(posts.table.weekday[i][j])
+        }
+          
+      }
+      
+      
+    }
+    
+    
+
+   
   })
 
+
+  
+
+  
 </script>
 <style>
   /* .main {
@@ -339,7 +367,8 @@
   </div>
   <div class="main">
     <div class="timetable-operation">
-      <div class="timetable">
+        <div class="timetable">
+        
         <div class="days">
           <p class="day">понедельник</p> 
         </div>
@@ -347,6 +376,7 @@
           <div class="operation">
             <p class="action">IDLE</p>
             <p class="action-time">17:20</p>
+            <p class="action-time"></p>
           </div>
           <div class="operation">
             <p class="action">IDLE</p>
@@ -367,8 +397,8 @@
             <p class="action">MODE2</p>
             <p class="action-time">20:40-23:50</p>
           </div>
-          
-        </div>  
+        </div> 
+        
       </div>
       <div class="timetable">
         <div class="days">
@@ -480,8 +510,9 @@
             <p class="action-time">20:40-23:50</p>
           </div>
           
-        </div>   
+        </div> 
       </div>
+      
       <div class="timetable">
         <div class="days">
           <p class="day">воскресенье</p> 

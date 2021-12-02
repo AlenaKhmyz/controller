@@ -16,8 +16,14 @@
       })
     })
     const data = await response.json()
-    sessionStorage.setItem("authtoken", data.token)
-     replace("/")
+    if(data.authorized == true){
+      // sessionStorage.setItem("authtoken", data.token)
+      document.cookie = "authtoken=" + data.token
+      replace("/")
+    } else {
+      alert("Wrong authorisation data.");
+    }
+    
   }
 
 </script>
