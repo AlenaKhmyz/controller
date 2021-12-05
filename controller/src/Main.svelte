@@ -1,41 +1,22 @@
 <script>
   import {onMount} from 'svelte'
 
+  const WEEKDAYS = ["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье"]
+
   let posts = {}
   let weekdays = []
 
 
   onMount(async() => {
   
-    const response = await fetch(`http://46.216.9.22:81/give?table`, {
+    const response = await fetch(`http://46.216.52.173:81/give?table`, {
       method: 'GET',
       headers: {'Content-Type': 'text/plain'},
      
     })
-      posts = await response.json()
-
-    // weekdays = posts.table.weekday[]
-    console.log(posts.table.weekday.length)
-    for(let i=0; i < posts.table.weekday.length; i++) {
-      console.log(posts.table.weekday[i])
-      if(posts.table.weekday[i] != null){
-        for(let j=0; j < posts.table.weekday[i].length; j++){
-          weekdays[i].push(posts.table.weekday[i][j])
-          console.log(posts.table.weekday[i][j])
-        }
-          
-      }
-      
-      
-    }
-    
-    
-
-   
-  })
-
-
-  
+    posts = await response.json()
+    console.log(posts, posts.table?.weekday)
+  });
 
   
 </script>
@@ -367,40 +348,47 @@
   </div>
   <div class="main">
     <div class="timetable-operation">
+      {#each (posts.table?.weekday || []) as weekday, dayIndex}
+        {#if weekday}
         <div class="timetable">
         
         <div class="days">
-          <p class="day">понедельник</p> 
+          <p class="day">{WEEKDAYS[dayIndex]}</p> 
         </div>
-        <div class="day-operations">
-          <div class="operation">
-            <p class="action">IDLE</p>
-            <p class="action-time">17:20</p>
-            <p class="action-time"></p>
-          </div>
-          <div class="operation">
-            <p class="action">IDLE</p>
-            <p class="action-time">17:20</p>
-          </div>
-          
-          <div class="operation">
-            <p class="action">IDLE</p>
-            <p class="action-time">17:20</p>
-          </div>
-          
-          <div class="operation">
-            <p class="action">MODE1</p>
-            <p class="action-time">17:20-20:40</p>
-          </div>
-          
-          <div class="operation">
-            <p class="action">MODE2</p>
-            <p class="action-time">20:40-23:50</p>
-          </div>
-        </div> 
         
-      </div>
-      <div class="timetable">
+          <div class="day-operations">
+            {#each (weekday || []) as operation}
+            <div class="operation">
+              <p class="action">{operation?.mode}</p>
+              <p class="action-time">{operation?.time}</p>
+              <p class="action-time">{operation?.preparemin}</p>
+            </div>
+            <!-- <div class="operation">
+              <p class="action">IDLE{weekday?.mode}</p>
+              <p class="action-time">17:20</p>
+            </div>
+            
+            <div class="operation">
+              <p class="action">IDLE{weekday?.mode}</p>
+              <p class="action-time">17:20</p>
+            </div>
+            
+            <div class="operation">
+              <p class="action">MODE1</p>
+              <p class="action-time">17:20-20:40</p>
+            </div>
+            
+            <div class="operation">
+              <p class="action">MODE2</p>
+              <p class="action-time">20:40-23:50</p> 
+            </div> -->
+          {/each}
+          </div> 
+     
+        </div>
+        {/if}
+       {/each}
+      <!-- <div class="timetable">
         <div class="days">
           <p class="day">вторник</p> 
         </div>
@@ -534,7 +522,7 @@
           </div>
           
         </div>    
-      </div>
+      </div> -->
     </div>
     <div class="elements-operations">
       <div class="mean">

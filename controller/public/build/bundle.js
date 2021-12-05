@@ -482,6 +482,13 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
+    function set_data_dev(text, data) {
+        data = '' + data;
+        if (text.wholeText === data)
+            return;
+        dispatch_dev('SvelteDOMSetData', { node: text, data });
+        text.data = data;
+    }
     function validate_each_argument(arg) {
         if (typeof arg !== 'string' && !(arg && typeof arg === 'object' && 'length' in arg)) {
             let msg = '{#each} only iterates over array-like objects.';
@@ -836,7 +843,7 @@ var app = (function () {
     }
 
     // (244:0) {#if componentParams}
-    function create_if_block(ctx) {
+    function create_if_block$1(ctx) {
     	let switch_instance;
     	let switch_instance_anchor;
     	let current;
@@ -924,7 +931,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block.name,
+    		id: create_if_block$1.name,
     		type: "if",
     		source: "(244:0) {#if componentParams}",
     		ctx
@@ -938,7 +945,7 @@ var app = (function () {
     	let if_block;
     	let if_block_anchor;
     	let current;
-    	const if_block_creators = [create_if_block, create_else_block];
+    	const if_block_creators = [create_if_block$1, create_else_block];
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
@@ -1888,8 +1895,234 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$1 = "src\\Main.svelte";
 
+    function get_each_context$1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[3] = list[i];
+    	child_ctx[5] = i;
+    	return child_ctx;
+    }
+
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[6] = list[i];
+    	return child_ctx;
+    }
+
+    // (352:8) {#if weekday}
+    function create_if_block(ctx) {
+    	let div2;
+    	let div0;
+    	let p;
+    	let t0_value = /*WEEKDAYS*/ ctx[1][/*dayIndex*/ ctx[5]] + "";
+    	let t0;
+    	let t1;
+    	let div1;
+    	let t2;
+    	let each_value_1 = /*weekday*/ ctx[3] || [];
+    	validate_each_argument(each_value_1);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			div2 = element("div");
+    			div0 = element("div");
+    			p = element("p");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			div1 = element("div");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t2 = space();
+    			attr_dev(p, "class", "day svelte-jnty5r");
+    			add_location(p, file$1, 355, 10, 10403);
+    			attr_dev(div0, "class", "days");
+    			add_location(div0, file$1, 354, 8, 10373);
+    			attr_dev(div1, "class", "day-operations svelte-jnty5r");
+    			add_location(div1, file$1, 358, 10, 10481);
+    			attr_dev(div2, "class", "timetable svelte-jnty5r");
+    			add_location(div2, file$1, 352, 8, 10330);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, div0);
+    			append_dev(div0, p);
+    			append_dev(p, t0);
+    			append_dev(div2, t1);
+    			append_dev(div2, div1);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(div1, null);
+    			}
+
+    			append_dev(div2, t2);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*posts*/ 1) {
+    				each_value_1 = /*weekday*/ ctx[3] || [];
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block_1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(div1, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value_1.length;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div2);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(352:8) {#if weekday}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (360:12) {#each (weekday || []) as operation}
+    function create_each_block_1(ctx) {
+    	let div;
+    	let p0;
+    	let t0_value = /*operation*/ ctx[6]?.mode + "";
+    	let t0;
+    	let t1;
+    	let p1;
+    	let t2_value = /*operation*/ ctx[6]?.time + "";
+    	let t2;
+    	let t3;
+    	let p2;
+    	let t4_value = /*operation*/ ctx[6]?.preparemin + "";
+    	let t4;
+    	let t5;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			p0 = element("p");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			p1 = element("p");
+    			t2 = text(t2_value);
+    			t3 = space();
+    			p2 = element("p");
+    			t4 = text(t4_value);
+    			t5 = space();
+    			attr_dev(p0, "class", "action svelte-jnty5r");
+    			add_location(p0, file$1, 361, 14, 10612);
+    			attr_dev(p1, "class", "action-time svelte-jnty5r");
+    			add_location(p1, file$1, 362, 14, 10667);
+    			attr_dev(p2, "class", "action-time svelte-jnty5r");
+    			add_location(p2, file$1, 363, 14, 10727);
+    			attr_dev(div, "class", "operation svelte-jnty5r");
+    			add_location(div, file$1, 360, 12, 10573);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, p0);
+    			append_dev(p0, t0);
+    			append_dev(div, t1);
+    			append_dev(div, p1);
+    			append_dev(p1, t2);
+    			append_dev(div, t3);
+    			append_dev(div, p2);
+    			append_dev(p2, t4);
+    			insert_dev(target, t5, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*posts*/ 1 && t0_value !== (t0_value = /*operation*/ ctx[6]?.mode + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*posts*/ 1 && t2_value !== (t2_value = /*operation*/ ctx[6]?.time + "")) set_data_dev(t2, t2_value);
+    			if (dirty & /*posts*/ 1 && t4_value !== (t4_value = /*operation*/ ctx[6]?.preparemin + "")) set_data_dev(t4, t4_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(t5);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(360:12) {#each (weekday || []) as operation}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (351:6) {#each (posts.table?.weekday || []) as weekday, dayIndex}
+    function create_each_block$1(ctx) {
+    	let if_block_anchor;
+    	let if_block = /*weekday*/ ctx[3] && create_if_block(ctx);
+
+    	const block = {
+    		c: function create() {
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
+    		},
+    		m: function mount(target, anchor) {
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, if_block_anchor, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (/*weekday*/ ctx[3]) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(if_block_anchor);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block$1.name,
+    		type: "each",
+    		source: "(351:6) {#each (posts.table?.weekday || []) as weekday, dayIndex}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
     function create_fragment$2(ctx) {
-    	let div62;
+    	let div18;
     	let div8;
     	let div0;
     	let svg;
@@ -1920,179 +2153,35 @@ var app = (function () {
     	let t14;
     	let p6;
     	let t16;
-    	let div61;
-    	let div53;
-    	let div16;
-    	let div9;
-    	let p7;
-    	let t18;
-    	let div15;
-    	let div10;
-    	let p8;
-    	let t20;
-    	let p9;
-    	let t22;
-    	let p10;
-    	let t23;
-    	let div11;
-    	let p11;
-    	let t25;
-    	let p12;
-    	let t27;
-    	let div12;
-    	let p13;
-    	let t29;
-    	let p14;
-    	let t31;
-    	let div13;
-    	let p15;
-    	let t33;
-    	let p16;
-    	let t35;
-    	let div14;
-    	let p17;
-    	let t37;
-    	let p18;
-    	let t39;
-    	let div22;
     	let div17;
-    	let p19;
-    	let t41;
-    	let div21;
-    	let div18;
-    	let p20;
-    	let t43;
-    	let p21;
-    	let t45;
-    	let div19;
-    	let p22;
-    	let t47;
-    	let p23;
-    	let t49;
-    	let div20;
-    	let p24;
-    	let t51;
-    	let p25;
-    	let t53;
-    	let div28;
-    	let div23;
-    	let p26;
-    	let t55;
-    	let div27;
-    	let div24;
-    	let p27;
-    	let t57;
-    	let p28;
-    	let t59;
-    	let div25;
-    	let p29;
-    	let t61;
-    	let p30;
-    	let t63;
-    	let div26;
-    	let p31;
-    	let t65;
-    	let p32;
-    	let t67;
-    	let div34;
-    	let div29;
-    	let p33;
-    	let t69;
-    	let div33;
-    	let div30;
-    	let p34;
-    	let t71;
-    	let p35;
-    	let t73;
-    	let div31;
-    	let p36;
-    	let t75;
-    	let p37;
-    	let t77;
-    	let div32;
-    	let p38;
-    	let t79;
-    	let p39;
-    	let t81;
-    	let div40;
-    	let div35;
-    	let p40;
-    	let t83;
-    	let div39;
-    	let div36;
-    	let p41;
-    	let t85;
-    	let p42;
-    	let t87;
-    	let div37;
-    	let p43;
-    	let t89;
-    	let p44;
-    	let t91;
-    	let div38;
-    	let p45;
-    	let t93;
-    	let p46;
-    	let t95;
-    	let div46;
-    	let div41;
-    	let p47;
-    	let t97;
-    	let div45;
-    	let div42;
-    	let p48;
-    	let t99;
-    	let p49;
-    	let t101;
-    	let div43;
-    	let p50;
-    	let t103;
-    	let p51;
-    	let t105;
-    	let div44;
-    	let p52;
-    	let t107;
-    	let p53;
-    	let t109;
-    	let div52;
-    	let div47;
-    	let p54;
-    	let t111;
-    	let div51;
-    	let div48;
-    	let p55;
-    	let t113;
-    	let p56;
-    	let t115;
-    	let div49;
-    	let p57;
-    	let t117;
-    	let p58;
-    	let t119;
-    	let div50;
-    	let p59;
-    	let t121;
-    	let p60;
-    	let t123;
-    	let div60;
-    	let div55;
-    	let p61;
-    	let t125;
-    	let div54;
-    	let t126;
-    	let div57;
-    	let p62;
-    	let t128;
-    	let div56;
-    	let t129;
-    	let div59;
-    	let p63;
-    	let t131;
-    	let div58;
+    	let div9;
+    	let t17;
+    	let div16;
+    	let div11;
+    	let p7;
+    	let t19;
+    	let div10;
+    	let t20;
+    	let div13;
+    	let p8;
+    	let t22;
+    	let div12;
+    	let t23;
+    	let div15;
+    	let p9;
+    	let t25;
+    	let div14;
+    	let each_value = /*posts*/ ctx[0].table?.weekday || [];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    	}
 
     	const block = {
     		c: function create() {
-    			div62 = element("div");
+    			div18 = element("div");
     			div8 = element("div");
     			div0 = element("div");
     			svg = svg_element("svg");
@@ -2131,242 +2220,43 @@ var app = (function () {
     			p6 = element("p");
     			p6.textContent = "MODE2";
     			t16 = space();
-    			div61 = element("div");
-    			div53 = element("div");
-    			div16 = element("div");
-    			div9 = element("div");
-    			p7 = element("p");
-    			p7.textContent = "понедельник";
-    			t18 = space();
-    			div15 = element("div");
-    			div10 = element("div");
-    			p8 = element("p");
-    			p8.textContent = "IDLE";
-    			t20 = space();
-    			p9 = element("p");
-    			p9.textContent = "17:20";
-    			t22 = space();
-    			p10 = element("p");
-    			t23 = space();
-    			div11 = element("div");
-    			p11 = element("p");
-    			p11.textContent = "IDLE";
-    			t25 = space();
-    			p12 = element("p");
-    			p12.textContent = "17:20";
-    			t27 = space();
-    			div12 = element("div");
-    			p13 = element("p");
-    			p13.textContent = "IDLE";
-    			t29 = space();
-    			p14 = element("p");
-    			p14.textContent = "17:20";
-    			t31 = space();
-    			div13 = element("div");
-    			p15 = element("p");
-    			p15.textContent = "MODE1";
-    			t33 = space();
-    			p16 = element("p");
-    			p16.textContent = "17:20-20:40";
-    			t35 = space();
-    			div14 = element("div");
-    			p17 = element("p");
-    			p17.textContent = "MODE2";
-    			t37 = space();
-    			p18 = element("p");
-    			p18.textContent = "20:40-23:50";
-    			t39 = space();
-    			div22 = element("div");
     			div17 = element("div");
-    			p19 = element("p");
-    			p19.textContent = "вторник";
-    			t41 = space();
-    			div21 = element("div");
-    			div18 = element("div");
-    			p20 = element("p");
-    			p20.textContent = "IDLE";
-    			t43 = space();
-    			p21 = element("p");
-    			p21.textContent = "17:20";
-    			t45 = space();
-    			div19 = element("div");
-    			p22 = element("p");
-    			p22.textContent = "MODE1";
-    			t47 = space();
-    			p23 = element("p");
-    			p23.textContent = "17:20-20:40";
-    			t49 = space();
-    			div20 = element("div");
-    			p24 = element("p");
-    			p24.textContent = "MODE2";
-    			t51 = space();
-    			p25 = element("p");
-    			p25.textContent = "20:40-23:50";
-    			t53 = space();
-    			div28 = element("div");
-    			div23 = element("div");
-    			p26 = element("p");
-    			p26.textContent = "среда";
-    			t55 = space();
-    			div27 = element("div");
-    			div24 = element("div");
-    			p27 = element("p");
-    			p27.textContent = "IDLE";
-    			t57 = space();
-    			p28 = element("p");
-    			p28.textContent = "17:20";
-    			t59 = space();
-    			div25 = element("div");
-    			p29 = element("p");
-    			p29.textContent = "MODE1";
-    			t61 = space();
-    			p30 = element("p");
-    			p30.textContent = "17:20-20:40";
-    			t63 = space();
-    			div26 = element("div");
-    			p31 = element("p");
-    			p31.textContent = "MODE2";
-    			t65 = space();
-    			p32 = element("p");
-    			p32.textContent = "20:40-23:50";
-    			t67 = space();
-    			div34 = element("div");
-    			div29 = element("div");
-    			p33 = element("p");
-    			p33.textContent = "четверг";
-    			t69 = space();
-    			div33 = element("div");
-    			div30 = element("div");
-    			p34 = element("p");
-    			p34.textContent = "IDLE";
-    			t71 = space();
-    			p35 = element("p");
-    			p35.textContent = "17:20";
-    			t73 = space();
-    			div31 = element("div");
-    			p36 = element("p");
-    			p36.textContent = "MODE1";
-    			t75 = space();
-    			p37 = element("p");
-    			p37.textContent = "17:20-20:40";
-    			t77 = space();
-    			div32 = element("div");
-    			p38 = element("p");
-    			p38.textContent = "MODE2";
-    			t79 = space();
-    			p39 = element("p");
-    			p39.textContent = "20:40-23:50";
-    			t81 = space();
-    			div40 = element("div");
-    			div35 = element("div");
-    			p40 = element("p");
-    			p40.textContent = "пятница";
-    			t83 = space();
-    			div39 = element("div");
-    			div36 = element("div");
-    			p41 = element("p");
-    			p41.textContent = "IDLE";
-    			t85 = space();
-    			p42 = element("p");
-    			p42.textContent = "17:20";
-    			t87 = space();
-    			div37 = element("div");
-    			p43 = element("p");
-    			p43.textContent = "MODE1";
-    			t89 = space();
-    			p44 = element("p");
-    			p44.textContent = "17:20-20:40";
-    			t91 = space();
-    			div38 = element("div");
-    			p45 = element("p");
-    			p45.textContent = "MODE2";
-    			t93 = space();
-    			p46 = element("p");
-    			p46.textContent = "20:40-23:50";
-    			t95 = space();
-    			div46 = element("div");
-    			div41 = element("div");
-    			p47 = element("p");
-    			p47.textContent = "суббота";
-    			t97 = space();
-    			div45 = element("div");
-    			div42 = element("div");
-    			p48 = element("p");
-    			p48.textContent = "IDLE";
-    			t99 = space();
-    			p49 = element("p");
-    			p49.textContent = "17:20";
-    			t101 = space();
-    			div43 = element("div");
-    			p50 = element("p");
-    			p50.textContent = "MODE1";
-    			t103 = space();
-    			p51 = element("p");
-    			p51.textContent = "17:20-20:40";
-    			t105 = space();
-    			div44 = element("div");
-    			p52 = element("p");
-    			p52.textContent = "MODE2";
-    			t107 = space();
-    			p53 = element("p");
-    			p53.textContent = "20:40-23:50";
-    			t109 = space();
-    			div52 = element("div");
-    			div47 = element("div");
-    			p54 = element("p");
-    			p54.textContent = "воскресенье";
-    			t111 = space();
-    			div51 = element("div");
-    			div48 = element("div");
-    			p55 = element("p");
-    			p55.textContent = "IDLE";
-    			t113 = space();
-    			p56 = element("p");
-    			p56.textContent = "17:20";
-    			t115 = space();
-    			div49 = element("div");
-    			p57 = element("p");
-    			p57.textContent = "MODE1";
-    			t117 = space();
-    			p58 = element("p");
-    			p58.textContent = "17:20-20:40";
-    			t119 = space();
-    			div50 = element("div");
-    			p59 = element("p");
-    			p59.textContent = "MODE2";
-    			t121 = space();
-    			p60 = element("p");
-    			p60.textContent = "20:40-23:50";
-    			t123 = space();
-    			div60 = element("div");
-    			div55 = element("div");
-    			p61 = element("p");
-    			p61.textContent = "1347mPm";
-    			t125 = space();
-    			div54 = element("div");
-    			t126 = space();
-    			div57 = element("div");
-    			p62 = element("p");
-    			p62.textContent = "3400mPm";
-    			t128 = space();
-    			div56 = element("div");
-    			t129 = space();
-    			div59 = element("div");
-    			p63 = element("p");
-    			p63.textContent = "120C";
-    			t131 = space();
-    			div58 = element("div");
+    			div9 = element("div");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t17 = space();
+    			div16 = element("div");
+    			div11 = element("div");
+    			p7 = element("p");
+    			p7.textContent = "1347mPm";
+    			t19 = space();
+    			div10 = element("div");
+    			t20 = space();
+    			div13 = element("div");
+    			p8 = element("p");
+    			p8.textContent = "3400mPm";
+    			t22 = space();
+    			div12 = element("div");
+    			t23 = space();
+    			div15 = element("div");
+    			p9 = element("p");
+    			p9.textContent = "120C";
+    			t25 = space();
+    			div14 = element("div");
     			attr_dev(path0, "fill", "#4c5867");
     			attr_dev(path0, "d", "M30.391,12.68l-3.064-0.614c-0.154-0.443-0.336-0.873-0.537-1.289l1.736-2.604\r\n            c0.529-0.793,0.424-1.85-0.25-2.523l-1.924-1.924c-0.387-0.387-0.898-0.586-1.416-0.586c-0.383,0-0.77,0.11-1.107,0.336\r\n            l-2.604,1.735c-0.418-0.202-0.848-0.382-1.291-0.536L19.32,1.61c-0.186-0.936-1.008-1.608-1.961-1.608h-2.72\r\n            c-0.953,0-1.774,0.673-1.961,1.608l-0.614,3.065c-0.443,0.154-0.873,0.335-1.289,0.536L8.172,3.476\r\n            C7.833,3.25,7.447,3.14,7.063,3.14c-0.517,0-1.028,0.199-1.415,0.586L3.725,5.65c-0.674,0.674-0.779,1.73-0.25,2.523l1.735,2.604\r\n            c-0.202,0.417-0.382,0.847-0.536,1.29L1.608,12.68C0.673,12.867,0,13.688,0,14.641v2.72c0,0.953,0.673,1.775,1.608,1.961\r\n            l3.065,0.615c0.154,0.443,0.335,0.873,0.536,1.289L3.475,23.83c-0.529,0.793-0.424,1.85,0.25,2.523l1.924,1.924\r\n            c0.387,0.387,0.898,0.586,1.415,0.586c0.384,0,0.771-0.111,1.108-0.336l2.604-1.736c0.417,0.203,0.847,0.383,1.29,0.537\r\n            l0.613,3.064c0.187,0.936,1.008,1.609,1.961,1.609h2.72c0.953,0,1.775-0.674,1.961-1.609l0.615-3.064\r\n            c0.443-0.154,0.873-0.336,1.289-0.537l2.604,1.736c0.338,0.225,0.725,0.336,1.107,0.336c0.518,0,1.029-0.199,1.416-0.586\r\n            l1.924-1.924c0.674-0.674,0.779-1.73,0.25-2.523l-1.736-2.604c0.203-0.418,0.383-0.848,0.537-1.291l3.064-0.613\r\n            C31.326,19.137,32,18.314,32,17.361v-2.72C32,13.688,31.326,12.867,30.391,12.68z M26.934,17.975\r\n            c-0.695,0.139-1.264,0.635-1.496,1.305c-0.129,0.369-0.279,0.727-0.447,1.074c-0.311,0.639-0.258,1.393,0.135,1.982l1.736,2.604\r\n            l-1.924,1.924l-2.604-1.736c-0.334-0.223-0.721-0.336-1.109-0.336c-0.297,0-0.596,0.066-0.871,0.199\r\n            c-0.348,0.168-0.705,0.32-1.076,0.449c-0.668,0.232-1.164,0.801-1.303,1.496l-0.615,3.066h-2.72l-0.613-3.066\r\n            c-0.139-0.695-0.635-1.264-1.304-1.496c-0.369-0.129-0.728-0.279-1.075-0.447c-0.276-0.135-0.574-0.201-0.872-0.201\r\n            c-0.389,0-0.775,0.113-1.109,0.336l-2.604,1.736l-1.924-1.924l1.735-2.604c0.393-0.59,0.444-1.344,0.137-1.98\r\n            c-0.168-0.348-0.319-0.705-0.448-1.076c-0.232-0.668-0.802-1.164-1.496-1.303l-3.065-0.615L2,14.641l3.066-0.613\r\n            c0.694-0.139,1.264-0.635,1.496-1.304c0.129-0.369,0.278-0.728,0.447-1.075c0.31-0.638,0.258-1.392-0.136-1.981L5.139,7.064\r\n            L7.062,5.14l2.604,1.735C10,7.098,10.387,7.211,10.775,7.211c0.297,0,0.595-0.066,0.871-0.199c0.347-0.168,0.705-0.319,1.075-0.448\r\n            c0.669-0.232,1.165-0.802,1.304-1.496l0.614-3.065l2.72-0.001l0.613,3.066c0.139,0.694,0.635,1.264,1.305,1.496\r\n            c0.369,0.129,0.727,0.278,1.074,0.447c0.277,0.134,0.574,0.2,0.873,0.2c0.389,0,0.775-0.113,1.109-0.336l2.604-1.735l1.924,1.924\r\n            l-1.736,2.604c-0.393,0.59-0.443,1.343-0.137,1.98c0.168,0.347,0.32,0.705,0.449,1.075c0.232,0.669,0.801,1.165,1.496,1.304\r\n            l3.064,0.614L30,17.361L26.934,17.975z");
-    			add_location(path0, file$1, 313, 10, 6220);
+    			add_location(path0, file$1, 294, 10, 5886);
     			attr_dev(path1, "fill", "#4c5867");
     			attr_dev(path1, "d", "M16,9.001c-3.865,0-7,3.135-7,7c0,3.866,3.135,7,7,7s7-3.135,7-7C23,12.136,19.865,9.001,16,9.001z\r\n            M16,22.127c-3.382,0-6.125-2.744-6.125-6.125c0-3.382,2.743-6.125,6.125-6.125c3.381,0,6.125,2.743,6.125,6.125\r\n            C22.125,19.383,19.381,22.127,16,22.127z");
-    			add_location(path1, file$1, 337, 10, 9126);
+    			add_location(path1, file$1, 318, 10, 8792);
     			attr_dev(path2, "fill", "#4c5867");
     			attr_dev(path2, "d", "M16,12.001c-2.21,0-4,1.79-4,4c0,2.209,1.79,4,4,4c2.209,0,4-1.791,4-4C20,13.792,18.209,12.001,16,12.001z\r\n            M16,19.002c-1.656,0-3-1.344-3-3c0-1.656,1.344-3,3-3s3,1.344,3,3C19,17.658,17.656,19.002,16,19.002z");
-    			add_location(path2, file$1, 340, 10, 9434);
+    			add_location(path2, file$1, 321, 10, 9100);
     			attr_dev(g, "id", "settings");
-    			add_location(g, file$1, 312, 8, 6191);
+    			add_location(g, file$1, 293, 8, 5857);
     			attr_dev(svg, "version", "1.1");
     			attr_dev(svg, "id", "Layer_1");
     			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
@@ -2378,268 +2268,72 @@ var app = (function () {
     			attr_dev(svg, "viewBox", "0 0 32 32");
     			attr_dev(svg, "enable-background", "new 0 0 32 32");
     			attr_dev(svg, "xml:space", "preserve");
-    			add_location(svg, file$1, 310, 36, 5946);
+    			add_location(svg, file$1, 291, 36, 5612);
     			attr_dev(p0, "class", "settings-word svelte-jnty5r");
-    			add_location(p0, file$1, 344, 6, 9712);
+    			add_location(p0, file$1, 325, 6, 9378);
     			attr_dev(div0, "class", "operation-settings svelte-jnty5r");
-    			add_location(div0, file$1, 310, 4, 5914);
+    			add_location(div0, file$1, 291, 4, 5580);
     			attr_dev(div1, "class", "time svelte-jnty5r");
-    			add_location(div1, file$1, 349, 8, 9895);
+    			add_location(div1, file$1, 330, 8, 9561);
     			attr_dev(div2, "class", "indicator svelte-jnty5r");
-    			add_location(div2, file$1, 347, 6, 9800);
+    			add_location(div2, file$1, 328, 6, 9466);
     			attr_dev(p1, "class", "operation-name svelte-jnty5r");
-    			add_location(p1, file$1, 353, 10, 10028);
+    			add_location(p1, file$1, 334, 10, 9694);
     			attr_dev(p2, "class", "operation-value svelte-jnty5r");
-    			add_location(p2, file$1, 354, 10, 10091);
+    			add_location(p2, file$1, 335, 10, 9757);
     			attr_dev(div3, "class", "operation-mean svelte-jnty5r");
-    			add_location(div3, file$1, 352, 8, 9988);
+    			add_location(div3, file$1, 333, 8, 9654);
     			attr_dev(p3, "class", "operation-name svelte-jnty5r");
-    			add_location(p3, file$1, 357, 10, 10192);
+    			add_location(p3, file$1, 338, 10, 9858);
     			attr_dev(p4, "class", "operation-value svelte-jnty5r");
-    			add_location(p4, file$1, 358, 10, 10246);
+    			add_location(p4, file$1, 339, 10, 9912);
     			attr_dev(div4, "class", "operation-mean svelte-jnty5r");
-    			add_location(div4, file$1, 356, 8, 10152);
+    			add_location(div4, file$1, 337, 8, 9818);
     			attr_dev(p5, "class", "operation-name svelte-jnty5r");
-    			add_location(p5, file$1, 361, 10, 10350);
+    			add_location(p5, file$1, 342, 10, 10016);
     			attr_dev(p6, "class", "operation-value svelte-jnty5r");
-    			add_location(p6, file$1, 362, 10, 10416);
+    			add_location(p6, file$1, 343, 10, 10082);
     			attr_dev(div5, "class", "operation-mean svelte-jnty5r");
-    			add_location(div5, file$1, 360, 8, 10310);
+    			add_location(div5, file$1, 341, 8, 9976);
     			attr_dev(div6, "class", "action-operations svelte-jnty5r");
-    			add_location(div6, file$1, 351, 6, 9947);
+    			add_location(div6, file$1, 332, 6, 9613);
     			attr_dev(div7, "class", "operations svelte-jnty5r");
-    			add_location(div7, file$1, 346, 4, 9768);
+    			add_location(div7, file$1, 327, 4, 9434);
     			attr_dev(div8, "class", "head svelte-jnty5r");
-    			add_location(div8, file$1, 309, 2, 5890);
-    			attr_dev(p7, "class", "day svelte-jnty5r");
-    			add_location(p7, file$1, 372, 10, 10649);
-    			attr_dev(div9, "class", "days");
-    			add_location(div9, file$1, 371, 8, 10619);
-    			attr_dev(p8, "class", "action svelte-jnty5r");
-    			add_location(p8, file$1, 376, 12, 10783);
-    			attr_dev(p9, "class", "action-time svelte-jnty5r");
-    			add_location(p9, file$1, 377, 12, 10823);
-    			attr_dev(p10, "class", "action-time svelte-jnty5r");
-    			add_location(p10, file$1, 378, 12, 10869);
-    			attr_dev(div10, "class", "operation svelte-jnty5r");
-    			add_location(div10, file$1, 375, 10, 10746);
-    			attr_dev(p11, "class", "action svelte-jnty5r");
-    			add_location(p11, file$1, 381, 12, 10963);
-    			attr_dev(p12, "class", "action-time svelte-jnty5r");
-    			add_location(p12, file$1, 382, 12, 11003);
-    			attr_dev(div11, "class", "operation svelte-jnty5r");
-    			add_location(div11, file$1, 380, 10, 10926);
-    			attr_dev(p13, "class", "action svelte-jnty5r");
-    			add_location(p13, file$1, 386, 12, 11114);
-    			attr_dev(p14, "class", "action-time svelte-jnty5r");
-    			add_location(p14, file$1, 387, 12, 11154);
-    			attr_dev(div12, "class", "operation svelte-jnty5r");
-    			add_location(div12, file$1, 385, 10, 11077);
-    			attr_dev(p15, "class", "action svelte-jnty5r");
-    			add_location(p15, file$1, 391, 12, 11265);
-    			attr_dev(p16, "class", "action-time svelte-jnty5r");
-    			add_location(p16, file$1, 392, 12, 11306);
-    			attr_dev(div13, "class", "operation svelte-jnty5r");
-    			add_location(div13, file$1, 390, 10, 11228);
-    			attr_dev(p17, "class", "action svelte-jnty5r");
-    			add_location(p17, file$1, 396, 12, 11423);
-    			attr_dev(p18, "class", "action-time svelte-jnty5r");
-    			add_location(p18, file$1, 397, 12, 11464);
-    			attr_dev(div14, "class", "operation svelte-jnty5r");
-    			add_location(div14, file$1, 395, 10, 11386);
-    			attr_dev(div15, "class", "day-operations svelte-jnty5r");
-    			add_location(div15, file$1, 374, 8, 10706);
-    			attr_dev(div16, "class", "timetable svelte-jnty5r");
-    			add_location(div16, file$1, 369, 8, 10576);
-    			attr_dev(p19, "class", "day svelte-jnty5r");
-    			add_location(p19, file$1, 404, 10, 11632);
-    			attr_dev(div17, "class", "days");
-    			add_location(div17, file$1, 403, 8, 11602);
-    			attr_dev(p20, "class", "action svelte-jnty5r");
-    			add_location(p20, file$1, 408, 12, 11762);
-    			attr_dev(p21, "class", "action-time svelte-jnty5r");
-    			add_location(p21, file$1, 409, 12, 11802);
-    			attr_dev(div18, "class", "operation svelte-jnty5r");
-    			add_location(div18, file$1, 407, 10, 11725);
-    			attr_dev(p22, "class", "action svelte-jnty5r");
-    			add_location(p22, file$1, 413, 12, 11913);
-    			attr_dev(p23, "class", "action-time svelte-jnty5r");
-    			add_location(p23, file$1, 414, 12, 11954);
-    			attr_dev(div19, "class", "operation svelte-jnty5r");
-    			add_location(div19, file$1, 412, 10, 11876);
-    			attr_dev(p24, "class", "action svelte-jnty5r");
-    			add_location(p24, file$1, 418, 12, 12071);
-    			attr_dev(p25, "class", "action-time svelte-jnty5r");
-    			add_location(p25, file$1, 419, 12, 12112);
-    			attr_dev(div20, "class", "operation svelte-jnty5r");
-    			add_location(div20, file$1, 417, 10, 12034);
-    			attr_dev(div21, "class", "day-operations svelte-jnty5r");
-    			add_location(div21, file$1, 406, 8, 11685);
-    			attr_dev(div22, "class", "timetable svelte-jnty5r");
-    			add_location(div22, file$1, 402, 6, 11569);
-    			attr_dev(p26, "class", "day svelte-jnty5r");
-    			add_location(p26, file$1, 427, 10, 12291);
-    			attr_dev(div23, "class", "days");
-    			add_location(div23, file$1, 426, 8, 12261);
-    			attr_dev(p27, "class", "action svelte-jnty5r");
-    			add_location(p27, file$1, 431, 12, 12419);
-    			attr_dev(p28, "class", "action-time svelte-jnty5r");
-    			add_location(p28, file$1, 432, 12, 12459);
-    			attr_dev(div24, "class", "operation svelte-jnty5r");
-    			add_location(div24, file$1, 430, 10, 12382);
-    			attr_dev(p29, "class", "action svelte-jnty5r");
-    			add_location(p29, file$1, 436, 12, 12570);
-    			attr_dev(p30, "class", "action-time svelte-jnty5r");
-    			add_location(p30, file$1, 437, 12, 12611);
-    			attr_dev(div25, "class", "operation svelte-jnty5r");
-    			add_location(div25, file$1, 435, 10, 12533);
-    			attr_dev(p31, "class", "action svelte-jnty5r");
-    			add_location(p31, file$1, 441, 12, 12728);
-    			attr_dev(p32, "class", "action-time svelte-jnty5r");
-    			add_location(p32, file$1, 442, 12, 12769);
-    			attr_dev(div26, "class", "operation svelte-jnty5r");
-    			add_location(div26, file$1, 440, 10, 12691);
-    			attr_dev(div27, "class", "day-operations svelte-jnty5r");
-    			add_location(div27, file$1, 429, 8, 12342);
-    			attr_dev(div28, "class", "timetable svelte-jnty5r");
-    			add_location(div28, file$1, 425, 6, 12228);
-    			attr_dev(p33, "class", "day svelte-jnty5r");
-    			add_location(p33, file$1, 450, 10, 12948);
-    			attr_dev(div29, "class", "days");
-    			add_location(div29, file$1, 449, 8, 12918);
-    			attr_dev(p34, "class", "action svelte-jnty5r");
-    			add_location(p34, file$1, 454, 12, 13078);
-    			attr_dev(p35, "class", "action-time svelte-jnty5r");
-    			add_location(p35, file$1, 455, 12, 13118);
-    			attr_dev(div30, "class", "operation svelte-jnty5r");
-    			add_location(div30, file$1, 453, 10, 13041);
-    			attr_dev(p36, "class", "action svelte-jnty5r");
-    			add_location(p36, file$1, 459, 12, 13229);
-    			attr_dev(p37, "class", "action-time svelte-jnty5r");
-    			add_location(p37, file$1, 460, 12, 13270);
-    			attr_dev(div31, "class", "operation svelte-jnty5r");
-    			add_location(div31, file$1, 458, 10, 13192);
-    			attr_dev(p38, "class", "action svelte-jnty5r");
-    			add_location(p38, file$1, 464, 12, 13387);
-    			attr_dev(p39, "class", "action-time svelte-jnty5r");
-    			add_location(p39, file$1, 465, 12, 13428);
-    			attr_dev(div32, "class", "operation svelte-jnty5r");
-    			add_location(div32, file$1, 463, 10, 13350);
-    			attr_dev(div33, "class", "day-operations svelte-jnty5r");
-    			add_location(div33, file$1, 452, 8, 13001);
-    			attr_dev(div34, "class", "timetable svelte-jnty5r");
-    			add_location(div34, file$1, 448, 6, 12885);
-    			attr_dev(p40, "class", "day svelte-jnty5r");
-    			add_location(p40, file$1, 472, 10, 13597);
-    			attr_dev(div35, "class", "days");
-    			add_location(div35, file$1, 471, 8, 13567);
-    			attr_dev(p41, "class", "action svelte-jnty5r");
-    			add_location(p41, file$1, 476, 12, 13727);
-    			attr_dev(p42, "class", "action-time svelte-jnty5r");
-    			add_location(p42, file$1, 477, 12, 13767);
-    			attr_dev(div36, "class", "operation svelte-jnty5r");
-    			add_location(div36, file$1, 475, 10, 13690);
-    			attr_dev(p43, "class", "action svelte-jnty5r");
-    			add_location(p43, file$1, 481, 12, 13878);
-    			attr_dev(p44, "class", "action-time svelte-jnty5r");
-    			add_location(p44, file$1, 482, 12, 13919);
-    			attr_dev(div37, "class", "operation svelte-jnty5r");
-    			add_location(div37, file$1, 480, 10, 13841);
-    			attr_dev(p45, "class", "action svelte-jnty5r");
-    			add_location(p45, file$1, 486, 12, 14036);
-    			attr_dev(p46, "class", "action-time svelte-jnty5r");
-    			add_location(p46, file$1, 487, 12, 14077);
-    			attr_dev(div38, "class", "operation svelte-jnty5r");
-    			add_location(div38, file$1, 485, 10, 13999);
-    			attr_dev(div39, "class", "day-operations svelte-jnty5r");
-    			add_location(div39, file$1, 474, 8, 13650);
-    			attr_dev(div40, "class", "timetable svelte-jnty5r");
-    			add_location(div40, file$1, 470, 6, 13534);
-    			attr_dev(p47, "class", "day svelte-jnty5r");
-    			add_location(p47, file$1, 494, 10, 14248);
-    			attr_dev(div41, "class", "days");
-    			add_location(div41, file$1, 493, 8, 14218);
-    			attr_dev(p48, "class", "action svelte-jnty5r");
-    			add_location(p48, file$1, 498, 12, 14378);
-    			attr_dev(p49, "class", "action-time svelte-jnty5r");
-    			add_location(p49, file$1, 499, 12, 14418);
-    			attr_dev(div42, "class", "operation svelte-jnty5r");
-    			add_location(div42, file$1, 497, 10, 14341);
-    			attr_dev(p50, "class", "action svelte-jnty5r");
-    			add_location(p50, file$1, 503, 12, 14529);
-    			attr_dev(p51, "class", "action-time svelte-jnty5r");
-    			add_location(p51, file$1, 504, 12, 14570);
-    			attr_dev(div43, "class", "operation svelte-jnty5r");
-    			add_location(div43, file$1, 502, 10, 14492);
-    			attr_dev(p52, "class", "action svelte-jnty5r");
-    			add_location(p52, file$1, 508, 12, 14687);
-    			attr_dev(p53, "class", "action-time svelte-jnty5r");
-    			add_location(p53, file$1, 509, 12, 14728);
-    			attr_dev(div44, "class", "operation svelte-jnty5r");
-    			add_location(div44, file$1, 507, 10, 14650);
-    			attr_dev(div45, "class", "day-operations svelte-jnty5r");
-    			add_location(div45, file$1, 496, 8, 14301);
-    			attr_dev(div46, "class", "timetable svelte-jnty5r");
-    			add_location(div46, file$1, 492, 6, 14185);
-    			attr_dev(p54, "class", "day svelte-jnty5r");
-    			add_location(p54, file$1, 517, 10, 14906);
-    			attr_dev(div47, "class", "days");
-    			add_location(div47, file$1, 516, 8, 14876);
-    			attr_dev(p55, "class", "action svelte-jnty5r");
-    			add_location(p55, file$1, 521, 12, 15040);
-    			attr_dev(p56, "class", "action-time svelte-jnty5r");
-    			add_location(p56, file$1, 522, 12, 15080);
-    			attr_dev(div48, "class", "operation svelte-jnty5r");
-    			add_location(div48, file$1, 520, 10, 15003);
-    			attr_dev(p57, "class", "action svelte-jnty5r");
-    			add_location(p57, file$1, 526, 12, 15191);
-    			attr_dev(p58, "class", "action-time svelte-jnty5r");
-    			add_location(p58, file$1, 527, 12, 15232);
-    			attr_dev(div49, "class", "operation svelte-jnty5r");
-    			add_location(div49, file$1, 525, 10, 15154);
-    			attr_dev(p59, "class", "action svelte-jnty5r");
-    			add_location(p59, file$1, 531, 12, 15349);
-    			attr_dev(p60, "class", "action-time svelte-jnty5r");
-    			add_location(p60, file$1, 532, 12, 15390);
-    			attr_dev(div50, "class", "operation svelte-jnty5r");
-    			add_location(div50, file$1, 530, 10, 15312);
-    			attr_dev(div51, "class", "day-operations svelte-jnty5r");
-    			add_location(div51, file$1, 519, 8, 14963);
-    			attr_dev(div52, "class", "timetable svelte-jnty5r");
-    			add_location(div52, file$1, 515, 6, 14843);
-    			attr_dev(div53, "class", "timetable-operation svelte-jnty5r");
-    			add_location(div53, file$1, 368, 4, 10533);
-    			attr_dev(p61, "class", "value svelte-jnty5r");
-    			add_location(p61, file$1, 540, 8, 15579);
-    			attr_dev(div54, "class", "symbol svelte-jnty5r");
-    			add_location(div54, file$1, 541, 8, 15617);
-    			attr_dev(div55, "class", "mean svelte-jnty5r");
-    			add_location(div55, file$1, 539, 6, 15551);
-    			attr_dev(p62, "class", "value svelte-jnty5r");
-    			add_location(p62, file$1, 544, 8, 15693);
-    			attr_dev(div56, "class", "symbol svelte-jnty5r");
-    			add_location(div56, file$1, 545, 8, 15731);
-    			attr_dev(div57, "class", "mean svelte-jnty5r");
-    			add_location(div57, file$1, 543, 6, 15665);
-    			attr_dev(p63, "class", "value svelte-jnty5r");
-    			add_location(p63, file$1, 548, 8, 15807);
-    			attr_dev(div58, "class", "symbol svelte-jnty5r");
-    			add_location(div58, file$1, 549, 8, 15842);
-    			attr_dev(div59, "class", "mean svelte-jnty5r");
-    			add_location(div59, file$1, 547, 6, 15779);
-    			attr_dev(div60, "class", "elements-operations svelte-jnty5r");
-    			add_location(div60, file$1, 538, 4, 15510);
-    			attr_dev(div61, "class", "main svelte-jnty5r");
-    			add_location(div61, file$1, 367, 2, 10509);
-    			attr_dev(div62, "class", "container svelte-jnty5r");
-    			add_location(div62, file$1, 308, 0, 5863);
+    			add_location(div8, file$1, 290, 2, 5556);
+    			attr_dev(div9, "class", "timetable-operation svelte-jnty5r");
+    			add_location(div9, file$1, 349, 4, 10199);
+    			attr_dev(p7, "class", "value svelte-jnty5r");
+    			add_location(p7, file$1, 528, 8, 15600);
+    			attr_dev(div10, "class", "symbol svelte-jnty5r");
+    			add_location(div10, file$1, 529, 8, 15638);
+    			attr_dev(div11, "class", "mean svelte-jnty5r");
+    			add_location(div11, file$1, 527, 6, 15572);
+    			attr_dev(p8, "class", "value svelte-jnty5r");
+    			add_location(p8, file$1, 532, 8, 15714);
+    			attr_dev(div12, "class", "symbol svelte-jnty5r");
+    			add_location(div12, file$1, 533, 8, 15752);
+    			attr_dev(div13, "class", "mean svelte-jnty5r");
+    			add_location(div13, file$1, 531, 6, 15686);
+    			attr_dev(p9, "class", "value svelte-jnty5r");
+    			add_location(p9, file$1, 536, 8, 15828);
+    			attr_dev(div14, "class", "symbol svelte-jnty5r");
+    			add_location(div14, file$1, 537, 8, 15863);
+    			attr_dev(div15, "class", "mean svelte-jnty5r");
+    			add_location(div15, file$1, 535, 6, 15800);
+    			attr_dev(div16, "class", "elements-operations svelte-jnty5r");
+    			add_location(div16, file$1, 526, 4, 15531);
+    			attr_dev(div17, "class", "main svelte-jnty5r");
+    			add_location(div17, file$1, 348, 2, 10175);
+    			attr_dev(div18, "class", "container svelte-jnty5r");
+    			add_location(div18, file$1, 289, 0, 5529);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div62, anchor);
-    			append_dev(div62, div8);
+    			insert_dev(target, div18, anchor);
+    			append_dev(div18, div8);
     			append_dev(div8, div0);
     			append_dev(div0, svg);
     			append_dev(svg, g);
@@ -2668,182 +2362,61 @@ var app = (function () {
     			append_dev(div5, p5);
     			append_dev(div5, t14);
     			append_dev(div5, p6);
-    			append_dev(div62, t16);
-    			append_dev(div62, div61);
-    			append_dev(div61, div53);
-    			append_dev(div53, div16);
-    			append_dev(div16, div9);
-    			append_dev(div9, p7);
-    			append_dev(div16, t18);
+    			append_dev(div18, t16);
+    			append_dev(div18, div17);
+    			append_dev(div17, div9);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(div9, null);
+    			}
+
+    			append_dev(div17, t17);
+    			append_dev(div17, div16);
+    			append_dev(div16, div11);
+    			append_dev(div11, p7);
+    			append_dev(div11, t19);
+    			append_dev(div11, div10);
+    			append_dev(div16, t20);
+    			append_dev(div16, div13);
+    			append_dev(div13, p8);
+    			append_dev(div13, t22);
+    			append_dev(div13, div12);
+    			append_dev(div16, t23);
     			append_dev(div16, div15);
-    			append_dev(div15, div10);
-    			append_dev(div10, p8);
-    			append_dev(div10, t20);
-    			append_dev(div10, p9);
-    			append_dev(div10, t22);
-    			append_dev(div10, p10);
-    			append_dev(div15, t23);
-    			append_dev(div15, div11);
-    			append_dev(div11, p11);
-    			append_dev(div11, t25);
-    			append_dev(div11, p12);
-    			append_dev(div15, t27);
-    			append_dev(div15, div12);
-    			append_dev(div12, p13);
-    			append_dev(div12, t29);
-    			append_dev(div12, p14);
-    			append_dev(div15, t31);
-    			append_dev(div15, div13);
-    			append_dev(div13, p15);
-    			append_dev(div13, t33);
-    			append_dev(div13, p16);
-    			append_dev(div15, t35);
+    			append_dev(div15, p9);
+    			append_dev(div15, t25);
     			append_dev(div15, div14);
-    			append_dev(div14, p17);
-    			append_dev(div14, t37);
-    			append_dev(div14, p18);
-    			append_dev(div53, t39);
-    			append_dev(div53, div22);
-    			append_dev(div22, div17);
-    			append_dev(div17, p19);
-    			append_dev(div22, t41);
-    			append_dev(div22, div21);
-    			append_dev(div21, div18);
-    			append_dev(div18, p20);
-    			append_dev(div18, t43);
-    			append_dev(div18, p21);
-    			append_dev(div21, t45);
-    			append_dev(div21, div19);
-    			append_dev(div19, p22);
-    			append_dev(div19, t47);
-    			append_dev(div19, p23);
-    			append_dev(div21, t49);
-    			append_dev(div21, div20);
-    			append_dev(div20, p24);
-    			append_dev(div20, t51);
-    			append_dev(div20, p25);
-    			append_dev(div53, t53);
-    			append_dev(div53, div28);
-    			append_dev(div28, div23);
-    			append_dev(div23, p26);
-    			append_dev(div28, t55);
-    			append_dev(div28, div27);
-    			append_dev(div27, div24);
-    			append_dev(div24, p27);
-    			append_dev(div24, t57);
-    			append_dev(div24, p28);
-    			append_dev(div27, t59);
-    			append_dev(div27, div25);
-    			append_dev(div25, p29);
-    			append_dev(div25, t61);
-    			append_dev(div25, p30);
-    			append_dev(div27, t63);
-    			append_dev(div27, div26);
-    			append_dev(div26, p31);
-    			append_dev(div26, t65);
-    			append_dev(div26, p32);
-    			append_dev(div53, t67);
-    			append_dev(div53, div34);
-    			append_dev(div34, div29);
-    			append_dev(div29, p33);
-    			append_dev(div34, t69);
-    			append_dev(div34, div33);
-    			append_dev(div33, div30);
-    			append_dev(div30, p34);
-    			append_dev(div30, t71);
-    			append_dev(div30, p35);
-    			append_dev(div33, t73);
-    			append_dev(div33, div31);
-    			append_dev(div31, p36);
-    			append_dev(div31, t75);
-    			append_dev(div31, p37);
-    			append_dev(div33, t77);
-    			append_dev(div33, div32);
-    			append_dev(div32, p38);
-    			append_dev(div32, t79);
-    			append_dev(div32, p39);
-    			append_dev(div53, t81);
-    			append_dev(div53, div40);
-    			append_dev(div40, div35);
-    			append_dev(div35, p40);
-    			append_dev(div40, t83);
-    			append_dev(div40, div39);
-    			append_dev(div39, div36);
-    			append_dev(div36, p41);
-    			append_dev(div36, t85);
-    			append_dev(div36, p42);
-    			append_dev(div39, t87);
-    			append_dev(div39, div37);
-    			append_dev(div37, p43);
-    			append_dev(div37, t89);
-    			append_dev(div37, p44);
-    			append_dev(div39, t91);
-    			append_dev(div39, div38);
-    			append_dev(div38, p45);
-    			append_dev(div38, t93);
-    			append_dev(div38, p46);
-    			append_dev(div53, t95);
-    			append_dev(div53, div46);
-    			append_dev(div46, div41);
-    			append_dev(div41, p47);
-    			append_dev(div46, t97);
-    			append_dev(div46, div45);
-    			append_dev(div45, div42);
-    			append_dev(div42, p48);
-    			append_dev(div42, t99);
-    			append_dev(div42, p49);
-    			append_dev(div45, t101);
-    			append_dev(div45, div43);
-    			append_dev(div43, p50);
-    			append_dev(div43, t103);
-    			append_dev(div43, p51);
-    			append_dev(div45, t105);
-    			append_dev(div45, div44);
-    			append_dev(div44, p52);
-    			append_dev(div44, t107);
-    			append_dev(div44, p53);
-    			append_dev(div53, t109);
-    			append_dev(div53, div52);
-    			append_dev(div52, div47);
-    			append_dev(div47, p54);
-    			append_dev(div52, t111);
-    			append_dev(div52, div51);
-    			append_dev(div51, div48);
-    			append_dev(div48, p55);
-    			append_dev(div48, t113);
-    			append_dev(div48, p56);
-    			append_dev(div51, t115);
-    			append_dev(div51, div49);
-    			append_dev(div49, p57);
-    			append_dev(div49, t117);
-    			append_dev(div49, p58);
-    			append_dev(div51, t119);
-    			append_dev(div51, div50);
-    			append_dev(div50, p59);
-    			append_dev(div50, t121);
-    			append_dev(div50, p60);
-    			append_dev(div61, t123);
-    			append_dev(div61, div60);
-    			append_dev(div60, div55);
-    			append_dev(div55, p61);
-    			append_dev(div55, t125);
-    			append_dev(div55, div54);
-    			append_dev(div60, t126);
-    			append_dev(div60, div57);
-    			append_dev(div57, p62);
-    			append_dev(div57, t128);
-    			append_dev(div57, div56);
-    			append_dev(div60, t129);
-    			append_dev(div60, div59);
-    			append_dev(div59, p63);
-    			append_dev(div59, t131);
-    			append_dev(div59, div58);
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*posts, WEEKDAYS*/ 3) {
+    				each_value = /*posts*/ ctx[0].table?.weekday || [];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context$1(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block$1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(div9, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+    		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div62);
+    			if (detaching) detach_dev(div18);
+    			destroy_each(each_blocks, detaching);
     		}
     	};
 
@@ -2861,30 +2434,28 @@ var app = (function () {
     function instance$2($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Main', slots, []);
+
+    	const WEEKDAYS = [
+    		"понедельник",
+    		"вторник",
+    		"среда",
+    		"четверг",
+    		"пятница",
+    		"суббота",
+    		"воскресенье"
+    	];
+
     	let posts = {};
     	let weekdays = [];
 
     	onMount(async () => {
-    		const response = await fetch(`http://46.216.9.22:81/give?table`, {
+    		const response = await fetch(`http://46.216.52.173:81/give?table`, {
     			method: 'GET',
     			headers: { 'Content-Type': 'text/plain' }
     		});
 
-    		posts = await response.json();
-
-    		// weekdays = posts.table.weekday[]
-    		console.log(posts.table.weekday.length);
-
-    		for (let i = 0; i < posts.table.weekday.length; i++) {
-    			console.log(posts.table.weekday[i]);
-
-    			if (posts.table.weekday[i] != null) {
-    				for (let j = 0; j < posts.table.weekday[i].length; j++) {
-    					weekdays[i].push(posts.table.weekday[i][j]);
-    					console.log(posts.table.weekday[i][j]);
-    				}
-    			}
-    		}
+    		$$invalidate(0, posts = await response.json());
+    		console.log(posts, posts.table?.weekday);
     	});
 
     	const writable_props = [];
@@ -2893,10 +2464,10 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Main> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ onMount, posts, weekdays });
+    	$$self.$capture_state = () => ({ onMount, WEEKDAYS, posts, weekdays });
 
     	$$self.$inject_state = $$props => {
-    		if ('posts' in $$props) posts = $$props.posts;
+    		if ('posts' in $$props) $$invalidate(0, posts = $$props.posts);
     		if ('weekdays' in $$props) weekdays = $$props.weekdays;
     	};
 
@@ -2904,7 +2475,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [];
+    	return [posts, WEEKDAYS];
     }
 
     class Main extends SvelteComponentDev {
