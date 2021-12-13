@@ -21,6 +21,12 @@ import App from './App.svelte';
      
     })
     wifies = await response.json()
+
+   
+      for (let i in  wifies) {
+        console.log(i)
+      }
+    
     console.log(wifies)
   });
 </script>
@@ -170,8 +176,8 @@ import App from './App.svelte';
 		    {/each}
       </select>
     </div>
-    <div class="ssid">
-      {#each [...wifies] as wifi}
+    <!-- <div class="ssid">
+      {#each wifies as wifi}
       <select value={section} on:change="{() => value = ''}" class="confirm">
         {#each wifi.SSID as ssid}
           <option value={ssid} class="name-paragraphs">
@@ -181,7 +187,7 @@ import App from './App.svelte';
       </select>
       {/each}
       <input class="confirm" placeholder="Введите пароль" type="password">
-    </div>
+    </div> -->
     <button class="settings-wi-fi-button">Подтвердить</button>
   </div>
 <!--Блок настройи контроллера-->

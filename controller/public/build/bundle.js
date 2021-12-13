@@ -340,10 +340,6 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
-    function prop_dev(node, property, value) {
-        node[property] = value;
-        dispatch_dev('SvelteDOMSetProperty', { node, property, value });
-    }
     function set_data_dev(text, data) {
         data = '' + data;
         if (text.wholeText === data)
@@ -673,26 +669,14 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[7] = list[i];
+    	child_ctx[6] = list[i];
     	return child_ctx;
     }
 
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[10] = list[i];
-    	return child_ctx;
-    }
-
-    function get_each_context_2(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[13] = list[i];
-    	return child_ctx;
-    }
-
-    // (166:8) {#each paragraphs as paragraph}
-    function create_each_block_2(ctx) {
+    // (172:8) {#each paragraphs as paragraph}
+    function create_each_block(ctx) {
     	let option;
-    	let t0_value = /*paragraph*/ ctx[13].text + "";
+    	let t0_value = /*paragraph*/ ctx[6].text + "";
     	let t0;
     	let t1;
 
@@ -701,10 +685,10 @@ var app = (function () {
     			option = element("option");
     			t0 = text(t0_value);
     			t1 = space();
-    			option.__value = /*paragraph*/ ctx[13];
+    			option.__value = /*paragraph*/ ctx[6];
     			option.value = option.__value;
     			attr_dev(option, "class", "name-paragraphs svelte-1gn0wnf");
-    			add_location(option, file, 166, 10, 4074);
+    			add_location(option, file, 172, 10, 4152);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -719,135 +703,9 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block_2.name,
-    		type: "each",
-    		source: "(166:8) {#each paragraphs as paragraph}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (176:8) {#each wifi.SSID as ssid}
-    function create_each_block_1(ctx) {
-    	let option;
-    	let t_value = /*ssid*/ ctx[10] + "";
-    	let t;
-    	let option_value_value;
-
-    	const block = {
-    		c: function create() {
-    			option = element("option");
-    			t = text(t_value);
-    			option.__value = option_value_value = /*ssid*/ ctx[10];
-    			option.value = option.__value;
-    			attr_dev(option, "class", "name-paragraphs svelte-1gn0wnf");
-    			add_location(option, file, 176, 10, 4404);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, option, anchor);
-    			append_dev(option, t);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*wifies*/ 2 && t_value !== (t_value = /*ssid*/ ctx[10] + "")) set_data_dev(t, t_value);
-
-    			if (dirty & /*wifies*/ 2 && option_value_value !== (option_value_value = /*ssid*/ ctx[10])) {
-    				prop_dev(option, "__value", option_value_value);
-    				option.value = option.__value;
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(option);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(176:8) {#each wifi.SSID as ssid}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (174:6) {#each [...wifies] as wifi}
-    function create_each_block(ctx) {
-    	let select;
-    	let mounted;
-    	let dispose;
-    	let each_value_1 = /*wifi*/ ctx[7].SSID;
-    	validate_each_argument(each_value_1);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	const block = {
-    		c: function create() {
-    			select = element("select");
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			attr_dev(select, "class", "confirm svelte-1gn0wnf");
-    			add_location(select, file, 174, 6, 4286);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, select, anchor);
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(select, null);
-    			}
-
-    			select_option(select, /*section*/ ctx[4]);
-
-    			if (!mounted) {
-    				dispose = listen_dev(select, "change", /*change_handler_1*/ ctx[6], false, false, false);
-    				mounted = true;
-    			}
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*wifies*/ 2) {
-    				each_value_1 = /*wifi*/ ctx[7].SSID;
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    					} else {
-    						each_blocks[i] = create_each_block_1(child_ctx);
-    						each_blocks[i].c();
-    						each_blocks[i].m(select, null);
-    					}
-    				}
-
-    				for (; i < each_blocks.length; i += 1) {
-    					each_blocks[i].d(1);
-    				}
-
-    				each_blocks.length = each_value_1.length;
-    			}
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(select);
-    			destroy_each(each_blocks, detaching);
-    			mounted = false;
-    			dispose();
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(174:6) {#each [...wifies] as wifi}",
+    		source: "(172:8) {#each paragraphs as paragraph}",
     		ctx
     	});
 
@@ -855,7 +713,7 @@ var app = (function () {
     }
 
     function create_fragment(ctx) {
-    	let div12;
+    	let div11;
     	let div7;
     	let h20;
     	let t1;
@@ -878,7 +736,7 @@ var app = (function () {
     	let t6;
     	let button0;
     	let t8;
-    	let div10;
+    	let div9;
     	let h21;
     	let t10;
     	let div8;
@@ -886,29 +744,17 @@ var app = (function () {
     	let t12;
     	let select;
     	let t13;
-    	let div9;
-    	let t14;
-    	let input5;
-    	let t15;
     	let button1;
-    	let t17;
-    	let div11;
+    	let t15;
+    	let div10;
     	let h22;
-    	let t19;
+    	let t17;
     	let button2;
-    	let t21;
+    	let t19;
     	let button3;
     	let mounted;
     	let dispose;
-    	let each_value_2 = /*paragraphs*/ ctx[2];
-    	validate_each_argument(each_value_2);
-    	let each_blocks_1 = [];
-
-    	for (let i = 0; i < each_value_2.length; i += 1) {
-    		each_blocks_1[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
-    	}
-
-    	let each_value = [.../*wifies*/ ctx[1]];
+    	let each_value = /*paragraphs*/ ctx[1];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -918,7 +764,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div12 = element("div");
+    			div11 = element("div");
     			div7 = element("div");
     			h20 = element("h2");
     			h20.textContent = "Авторизационные данные";
@@ -943,7 +789,7 @@ var app = (function () {
     			button0 = element("button");
     			button0.textContent = "Подтвердить";
     			t8 = space();
-    			div10 = element("div");
+    			div9 = element("div");
     			h21 = element("h2");
     			h21.textContent = "Настройки wi-fi";
     			t10 = space();
@@ -953,107 +799,92 @@ var app = (function () {
     			t12 = space();
     			select = element("select");
 
-    			for (let i = 0; i < each_blocks_1.length; i += 1) {
-    				each_blocks_1[i].c();
-    			}
-
-    			t13 = space();
-    			div9 = element("div");
-
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t14 = space();
-    			input5 = element("input");
-    			t15 = space();
+    			t13 = space();
     			button1 = element("button");
     			button1.textContent = "Подтвердить";
-    			t17 = space();
-    			div11 = element("div");
+    			t15 = space();
+    			div10 = element("div");
     			h22 = element("h2");
     			h22.textContent = "Настройки контроллера";
-    			t19 = space();
+    			t17 = space();
     			button2 = element("button");
     			button2.textContent = "Сброс настроек";
-    			t21 = space();
+    			t19 = space();
     			button3 = element("button");
     			button3.textContent = "Рестарт микроконтроллера";
     			attr_dev(h20, "class", "title svelte-1gn0wnf");
-    			add_location(h20, file, 137, 4, 2815);
+    			add_location(h20, file, 143, 4, 2893);
     			attr_dev(input0, "class", "current-login-input-field svelte-1gn0wnf");
     			attr_dev(input0, "placeholder", "Текущий логин");
     			attr_dev(input0, "type", "text");
-    			add_location(input0, file, 140, 8, 2930);
+    			add_location(input0, file, 146, 8, 3008);
     			attr_dev(div0, "class", "current-login");
-    			add_location(div0, file, 139, 6, 2893);
+    			add_location(div0, file, 145, 6, 2971);
     			attr_dev(input1, "class", "current-login-input-field svelte-1gn0wnf");
     			attr_dev(input1, "placeholder", "Новый логин");
     			attr_dev(input1, "type", "text");
-    			add_location(input1, file, 143, 8, 3067);
+    			add_location(input1, file, 149, 8, 3145);
     			attr_dev(div1, "class", "new-login");
-    			add_location(div1, file, 142, 7, 3034);
+    			add_location(div1, file, 148, 7, 3112);
     			attr_dev(div2, "class", "login svelte-1gn0wnf");
-    			add_location(div2, file, 138, 4, 2866);
+    			add_location(div2, file, 144, 4, 2944);
     			attr_dev(input2, "class", "current-password-input-field svelte-1gn0wnf");
     			attr_dev(input2, "placeholder", "Текущий пароль");
     			attr_dev(input2, "type", "password");
-    			add_location(input2, file, 148, 8, 3248);
+    			add_location(input2, file, 154, 8, 3326);
     			attr_dev(div3, "class", "current-password");
-    			add_location(div3, file, 147, 6, 3208);
+    			add_location(div3, file, 153, 6, 3286);
     			attr_dev(input3, "class", "new-password-input-field svelte-1gn0wnf");
     			attr_dev(input3, "placeholder", "Новый пароль");
     			attr_dev(input3, "type", "password");
-    			add_location(input3, file, 151, 8, 3395);
+    			add_location(input3, file, 157, 8, 3473);
     			attr_dev(div4, "class", "new-password");
-    			add_location(div4, file, 150, 6, 3359);
+    			add_location(div4, file, 156, 6, 3437);
     			attr_dev(input4, "class", "confirmation-password-input-field svelte-1gn0wnf");
     			attr_dev(input4, "placeholder", "Подтвердите пароль");
     			attr_dev(input4, "type", "password");
-    			add_location(input4, file, 154, 8, 3545);
+    			add_location(input4, file, 160, 8, 3623);
     			attr_dev(div5, "class", "confirmation-password");
-    			add_location(div5, file, 153, 6, 3500);
+    			add_location(div5, file, 159, 6, 3578);
     			attr_dev(div6, "class", "password svelte-1gn0wnf");
-    			add_location(div6, file, 146, 4, 3178);
+    			add_location(div6, file, 152, 4, 3256);
     			attr_dev(button0, "class", "authoraization-button svelte-1gn0wnf");
-    			add_location(button0, file, 157, 4, 3675);
+    			add_location(button0, file, 163, 4, 3753);
     			attr_dev(div7, "class", "authorization svelte-1gn0wnf");
-    			add_location(div7, file, 136, 2, 2782);
+    			add_location(div7, file, 142, 2, 2860);
     			attr_dev(h21, "class", "title svelte-1gn0wnf");
-    			add_location(h21, file, 161, 4, 3813);
+    			add_location(h21, file, 167, 4, 3891);
     			attr_dev(p, "class", "block-paragraphs svelte-1gn0wnf");
-    			add_location(p, file, 163, 6, 3891);
+    			add_location(p, file, 169, 6, 3969);
     			attr_dev(select, "class", "paragraphs svelte-1gn0wnf");
-    			add_location(select, file, 164, 6, 3946);
+    			add_location(select, file, 170, 6, 4024);
     			attr_dev(div8, "class", "access-point svelte-1gn0wnf");
-    			add_location(div8, file, 162, 4, 3857);
-    			attr_dev(input5, "class", "confirm svelte-1gn0wnf");
-    			attr_dev(input5, "placeholder", "Введите пароль");
-    			attr_dev(input5, "type", "password");
-    			add_location(input5, file, 182, 6, 4544);
-    			attr_dev(div9, "class", "ssid svelte-1gn0wnf");
-    			add_location(div9, file, 172, 4, 4225);
+    			add_location(div8, file, 168, 4, 3935);
     			attr_dev(button1, "class", "settings-wi-fi-button svelte-1gn0wnf");
-    			add_location(button1, file, 184, 4, 4630);
-    			attr_dev(div10, "class", "settings-wi-fi svelte-1gn0wnf");
-    			add_location(div10, file, 160, 2, 3779);
+    			add_location(button1, file, 190, 4, 4712);
+    			attr_dev(div9, "class", "settings-wi-fi svelte-1gn0wnf");
+    			add_location(div9, file, 166, 2, 3857);
     			attr_dev(h22, "class", "title svelte-1gn0wnf");
-    			add_location(h22, file, 188, 4, 4766);
+    			add_location(h22, file, 194, 4, 4848);
     			attr_dev(button2, "class", "reset svelte-1gn0wnf");
-    			add_location(button2, file, 189, 4, 4816);
+    			add_location(button2, file, 195, 4, 4898);
     			attr_dev(button3, "class", "restart svelte-1gn0wnf");
-    			add_location(button3, file, 190, 4, 4867);
-    			attr_dev(div11, "class", "controller svelte-1gn0wnf");
-    			add_location(div11, file, 187, 2, 4736);
-    			attr_dev(div12, "class", "settings svelte-1gn0wnf");
-    			add_location(div12, file, 134, 0, 2729);
+    			add_location(button3, file, 196, 4, 4949);
+    			attr_dev(div10, "class", "controller svelte-1gn0wnf");
+    			add_location(div10, file, 193, 2, 4818);
+    			attr_dev(div11, "class", "settings svelte-1gn0wnf");
+    			add_location(div11, file, 140, 0, 2807);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div12, anchor);
-    			append_dev(div12, div7);
+    			insert_dev(target, div11, anchor);
+    			append_dev(div11, div7);
     			append_dev(div7, h20);
     			append_dev(div7, t1);
     			append_dev(div7, div2);
@@ -1074,71 +905,38 @@ var app = (function () {
     			append_dev(div5, input4);
     			append_dev(div7, t6);
     			append_dev(div7, button0);
-    			append_dev(div12, t8);
-    			append_dev(div12, div10);
-    			append_dev(div10, h21);
-    			append_dev(div10, t10);
-    			append_dev(div10, div8);
+    			append_dev(div11, t8);
+    			append_dev(div11, div9);
+    			append_dev(div9, h21);
+    			append_dev(div9, t10);
+    			append_dev(div9, div8);
     			append_dev(div8, p);
     			append_dev(div8, t12);
     			append_dev(div8, select);
 
-    			for (let i = 0; i < each_blocks_1.length; i += 1) {
-    				each_blocks_1[i].m(select, null);
-    			}
-
-    			select_option(select, /*selected*/ ctx[3]);
-    			append_dev(div10, t13);
-    			append_dev(div10, div9);
-
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(div9, null);
+    				each_blocks[i].m(select, null);
     			}
 
-    			append_dev(div9, t14);
-    			append_dev(div9, input5);
-    			append_dev(div10, t15);
-    			append_dev(div10, button1);
-    			append_dev(div12, t17);
-    			append_dev(div12, div11);
-    			append_dev(div11, h22);
-    			append_dev(div11, t19);
-    			append_dev(div11, button2);
-    			append_dev(div11, t21);
-    			append_dev(div11, button3);
+    			select_option(select, /*selected*/ ctx[2]);
+    			append_dev(div9, t13);
+    			append_dev(div9, button1);
+    			append_dev(div11, t15);
+    			append_dev(div11, div10);
+    			append_dev(div10, h22);
+    			append_dev(div10, t17);
+    			append_dev(div10, button2);
+    			append_dev(div10, t19);
+    			append_dev(div10, button3);
 
     			if (!mounted) {
-    				dispose = listen_dev(select, "change", /*change_handler*/ ctx[5], false, false, false);
+    				dispose = listen_dev(select, "change", /*change_handler*/ ctx[3], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*paragraphs*/ 4) {
-    				each_value_2 = /*paragraphs*/ ctx[2];
-    				validate_each_argument(each_value_2);
-    				let i;
-
-    				for (i = 0; i < each_value_2.length; i += 1) {
-    					const child_ctx = get_each_context_2(ctx, each_value_2, i);
-
-    					if (each_blocks_1[i]) {
-    						each_blocks_1[i].p(child_ctx, dirty);
-    					} else {
-    						each_blocks_1[i] = create_each_block_2(child_ctx);
-    						each_blocks_1[i].c();
-    						each_blocks_1[i].m(select, null);
-    					}
-    				}
-
-    				for (; i < each_blocks_1.length; i += 1) {
-    					each_blocks_1[i].d(1);
-    				}
-
-    				each_blocks_1.length = each_value_2.length;
-    			}
-
-    			if (dirty & /*section, value, wifies*/ 19) {
-    				each_value = [.../*wifies*/ ctx[1]];
+    			if (dirty & /*paragraphs*/ 2) {
+    				each_value = /*paragraphs*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
 
@@ -1150,7 +948,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(div9, t14);
+    						each_blocks[i].m(select, null);
     					}
     				}
 
@@ -1164,8 +962,7 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div12);
-    			destroy_each(each_blocks_1, detaching);
+    			if (detaching) detach_dev(div11);
     			destroy_each(each_blocks, detaching);
     			mounted = false;
     			dispose();
@@ -1202,7 +999,12 @@ var app = (function () {
 
     	onMount(async () => {
     		const response = await fetch(`http://46.216.22.74:81/give?wifi`, { method: 'GET' }); // headers: {'Content-Type': 'text/plain'},
-    		$$invalidate(1, wifies = await response.json());
+    		wifies = await response.json();
+
+    		for (let i in wifies) {
+    			console.log(i);
+    		}
+
     		console.log(wifies);
     	});
 
@@ -1213,7 +1015,6 @@ var app = (function () {
     	});
 
     	const change_handler = () => $$invalidate(0, value = '');
-    	const change_handler_1 = () => $$invalidate(0, value = '');
 
     	$$self.$capture_state = () => ({
     		onMount,
@@ -1227,18 +1028,18 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('paragraphs' in $$props) $$invalidate(2, paragraphs = $$props.paragraphs);
-    		if ('selected' in $$props) $$invalidate(3, selected = $$props.selected);
+    		if ('paragraphs' in $$props) $$invalidate(1, paragraphs = $$props.paragraphs);
+    		if ('selected' in $$props) $$invalidate(2, selected = $$props.selected);
     		if ('value' in $$props) $$invalidate(0, value = $$props.value);
-    		if ('wifies' in $$props) $$invalidate(1, wifies = $$props.wifies);
-    		if ('section' in $$props) $$invalidate(4, section = $$props.section);
+    		if ('wifies' in $$props) wifies = $$props.wifies;
+    		if ('section' in $$props) section = $$props.section;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [value, wifies, paragraphs, selected, section, change_handler, change_handler_1];
+    	return [value, paragraphs, selected, change_handler];
     }
 
     class Authorization extends SvelteComponentDev {
