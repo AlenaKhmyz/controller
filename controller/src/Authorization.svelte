@@ -1,5 +1,7 @@
 <script>
+  import {onMount} from 'svelte'
   import { missing_component } from "svelte/internal";
+import App from './App.svelte';
   let paragraphs = [
     {id: 1, text: 'Независимая точка доступа'},
     {id: 2, text: 'Подключиться к существующей сети'},
@@ -8,6 +10,19 @@
   let selected;
 
   let value = "";
+  let wifies
+  let section
+
+  onMount(async() => {
+  
+    const response = await fetch(`http://46.216.22.74:81/give?wifi`, {
+      method: 'GET',
+      // headers: {'Content-Type': 'text/plain'},
+     
+    })
+    wifies = await response.json()
+    console.log(wifies)
+  });
 </script>
 
 
@@ -156,7 +171,15 @@
       </select>
     </div>
     <div class="ssid">
-      <input class="confirm" placeholder="Введите SSID" type="text">
+      {#each [...wifies] as wifi}
+      <select value={section} on:change="{() => value = ''}" class="confirm">
+        {#each wifi.SSID as ssid}
+          <option value={ssid} class="name-paragraphs">
+           {ssid}
+          </option>
+		    {/each}
+      </select>
+      {/each}
       <input class="confirm" placeholder="Введите пароль" type="password">
     </div>
     <button class="settings-wi-fi-button">Подтвердить</button>

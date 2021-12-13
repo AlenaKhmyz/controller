@@ -9,7 +9,7 @@
 
   onMount(async() => {
   
-    const response = await fetch(`http://46.216.52.173:81/give?table`, {
+    const response = await fetch(`http://46.216.22.74:81/give?table`, {
       method: 'GET',
       headers: {'Content-Type': 'text/plain'},
      
